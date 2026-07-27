@@ -1,22 +1,22 @@
-# r7rs-markdown
+# R7RS Markdown
 
-A legible, complete **Markdown edition** of the R7RS-small specification
+A legible, complete Markdown formatting of the R7RS-small specification
 (*Revised⁷ Report on the Algorithmic Language Scheme*), generated automatically
 from the official LaTeX sources.
 
-- 📖 **Read it:** [`markdown/README.md`](markdown/README.md) — title page, table
+- [`markdown/README.md`](markdown/README.md) — Title page, table
   of contents, and an alphabetic index of every procedure and keyword.
-- 📄 **Single file:** [`markdown/r7rs.md`](markdown/r7rs.md) — the whole report
+- [`markdown/r7rs.md`](markdown/r7rs.md) — The whole report
   in one document.
-- 📚 **Per chapter:** the numbered files in [`markdown/`](markdown/).
+- [`markdown/`](markdown/) - Individual files.
 
 ## Relationship to r7rs-spec
 
-This repository is **not a fork**. It *references* John Cowan's upstream
-[`r7rs-spec`](https://github.com/johnwcowan/r7rs-spec) repository as a pinned
-**git submodule** at [`r7rs-spec/`](r7rs-spec). The LaTeX sources live there and
-remain owned upstream; this repo adds only the converter and the generated
-Markdown.
+This repository references John Cowan's upstream
+[`r7rs-spec`](https://github.com/johnwcowan/r7rs-spec) repository as a
+pinned git submodule at [`r7rs-spec/`](r7rs-spec). The LaTeX sources
+live there and remain owned upstream; this repo adds only the
+converter and the generated Markdown.
 
 ```
 r7rs-markdown/
@@ -59,11 +59,6 @@ The converter maps the report's custom LaTeX macros (procedure prototypes,
 `scheme` examples, BNF grammars, cross-references, the bibliography, and the
 formal denotational semantics) to GitHub-flavored Markdown, using GitHub math
 (`$...$` / `$$...$$`) for the formal semantics.
-
-> **Note on Obsidian:** the Markdown keeps the sources' soft line-wrapping.
-> Obsidian's default renders every source newline as a line break; enable
-> **Settings → Editor → "Strict line breaks"** to wrap paragraphs as GitHub
-> does.
 
 ## Attribution and license
 
