@@ -489,7 +489,7 @@ s \;§\; t & \text{concatenation of sequences }s\text{ and }t \\
 s \dagger k & \text{drop the first }k\text{ members of sequence }s \\
 t \rightarrow a, b & \text{McCarthy conditional “if }t\text{ then }a\text{ else }b\text{”} \\
 \rho[x/i] & \text{substitution “}\rho\text{ with }x\text{ for }i\text{”} \\
-x\mathrm{in }{\texttt{D}} & \text{injection of }x\text{ into domain }\texttt{D} \\
+x\mathrm{ in }{\texttt{D}} & \text{injection of }x\text{ into domain }\texttt{D} \\
 x\,\vert\,\texttt{D} & \text{projection of }x\text{ to domain }\texttt{D} \\
 \end{array}
 ```
@@ -645,7 +645,7 @@ Definition of K deliberately omitted.
 (\mathit{extends}\;\rho\;{{\mathrm{I}}^{*}}\;{\alpha}^{*})) \\
 {\epsilon}^{*}, \\
 \text{}\mathit{wrong }\mathrm{\text{“}wrong number of arguments\text{”}}⟩ \\
-\mathrm{in }\mathtt{E}) \\
+\mathrm{ in }\mathtt{E}) \\
 \kappa \\
 (\mathit{update}\;(\mathit{new}\;\sigma\,\vert\,\mathtt{L})
                            \;\mathit{unspecified}
@@ -673,7 +673,7 @@ Definition of K deliberately omitted.
                                \;{\alpha}^{*})) \\
 {\epsilon}^{*} \\
 (\#{\mathrm{I}}^{*}), \\
-\text{}\mathit{wrong }\mathrm{\text{“}too few arguments\text{”}}⟩\mathrm{in }\mathtt{E}) \\
+\text{}\mathit{wrong }\mathrm{\text{“}too few arguments\text{”}}⟩\mathrm{ in }\mathtt{E}) \\
 \kappa \\
 (\mathit{update}\;(\mathit{new}\;\sigma\,\vert\,\mathtt{L})
                            \;\mathit{unspecified}
@@ -945,7 +945,7 @@ be used in place of *unspecified*.
                (⟨\mathit{new}\;\sigma\;\vert\;\mathtt{L},
                                             \mathit{new}\;\sigma^\prime\;\vert\;\mathtt{L},
          \mathit{true}⟩ \\
-\mathrm{in }\mathtt{E}) \\
+\mathrm{ in }\mathtt{E}) \\
 \kappa \\
 (\mathit{update}(\mathit{new}\;\sigma^\prime\;\vert\;\mathtt{L})
                                      \epsilon_2
@@ -978,7 +978,7 @@ be used in place of *unspecified*.
 \text{}\mathit{twoarg}\,(\lambda\epsilon_1\epsilon_2\omega\kappa\;.\;
    (\epsilon_1\;\in\;\mathtt{R}\wedge\epsilon_2\;\in\;\mathtt{R})\rightarrow \\
 \text{}\mathit{send}\,
-       ((\epsilon_1\;\vert\;\mathtt{R}+\epsilon_2\;\vert\;\mathtt{R})\mathrm{in }\mathtt{E})
+       ((\epsilon_1\;\vert\;\mathtt{R}+\epsilon_2\;\vert\;\mathtt{R})\mathrm{ in }\mathtt{E})
            \kappa, \\
 \text{}\mathit{wrong }\mathrm{\text{“}non-numeric argument to { +}\text{”}})
 \end{aligned}
@@ -1120,7 +1120,7 @@ be used in place of *unspecified*.
 ⟨⟨\mathit{new}\;\sigma\;\vert\;\mathtt{L}, \\
           \lambda{\epsilon}^{*}\omega^\prime\kappa^\prime\;.\;
                              \mathit{travel}\;\omega^\prime\omega(\kappa{\epsilon}^{*})⟩ \\
-                      \mathrm{in }\mathtt{E}⟩ \\
+                      \mathrm{ in }\mathtt{E}⟩ \\
 \omega \\
 \kappa \\
 (\mathit{update}\,

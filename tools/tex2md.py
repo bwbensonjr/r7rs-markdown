@@ -518,7 +518,9 @@ def _math_fonts(m):
             if im:
                 rep = im.group(1)
             elif fm:
-                rep = _MATH_FONT[fm.group(1)] + '{' + fm.group(2) + '}'
+                # preserve a leading space (e.g. \hbox{ \rm in } -> \mathrm{ in })
+                lead = ' ' if re.match(r'\s', inner) else ''
+                rep = _MATH_FONT[fm.group(1)] + '{' + lead + fm.group(2) + '}'
             else:
                 rep = '\\text{' + inner + '}'
             m = m[:mo.start()] + rep + m[close + 1:]
