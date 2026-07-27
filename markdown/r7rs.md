@@ -8250,7 +8250,6 @@ $$\mathcal{C}⟦\Gamma_0\;{\Gamma}^{*}⟧ =
 $$
 \begin{aligned}
 \mathit{lookup}        :  \mathtt{U} \to \mathrm{Ide} \to \mathtt{L} \\
-
 \mathit{lookup} =
  \lambda\rho\mathrm{I}\;.\;\rho\mathrm{I}
 \end{aligned}
@@ -8259,7 +8258,6 @@ $$
 $$
 \begin{aligned}
 \mathit{extends}       :  \mathtt{U} \to {\mathrm{Ide}}^{*} \to {\mathtt{L}}^{*} \to \mathtt{U} \\
-
 \mathit{extends} = \\
 \text{}\lambda\rho{\mathrm{I}}^{*}{\alpha}^{*}\;.\;
    \#{\mathrm{I}}^{*}=0\rightarrow\rho, \\
@@ -8274,7 +8272,6 @@ $$\mathit{wrong}  :  \mathtt{X} \to \mathtt{C}    \text{\qquad [implementation-d
 $$
 \begin{aligned}
 \mathit{send}          :  \mathtt{E} \to \mathtt{K} \to \mathtt{C} \\
-
 \mathit{send} =
  \lambda\epsilon\kappa\;.\;\kappa⟨\epsilon⟩
 \end{aligned}
@@ -8283,7 +8280,6 @@ $$
 $$
 \begin{aligned}
 \mathit{single}        :  (\mathtt{E} \to \mathtt{C}) \to \mathtt{K} \\
-
 \mathit{single} = \\
 \text{}\lambda\psi{\epsilon}^{*}\;.\;
    \#{\epsilon}^{*}=1\rightarrow\psi({\epsilon}^{*}\downarrow 1), \\
@@ -8297,7 +8293,6 @@ $$\mathit{new}           :  \mathtt{S} \to (\mathtt{L} + \{ \mathit{error} \})
 $$
 \begin{aligned}
 \mathit{hold}          :  \mathtt{L} \to \mathtt{K} \to \mathtt{C} \\
-
 \mathit{hold} =
  \lambda\alpha\kappa\sigma\;.\;\mathit{send}\,(\sigma\alpha\downarrow 1)\kappa\sigma
 \end{aligned}
@@ -8306,7 +8301,6 @@ $$
 $$
 \begin{aligned}
 \mathit{assign}        :  \mathtt{L} \to \mathtt{E} \to \mathtt{C} \to \mathtt{C} \\
-
 \mathit{assign} =
  \lambda\alpha\epsilon\theta\sigma\;.\;\theta(\mathit{update}\;\alpha\epsilon\sigma)
 \end{aligned}
@@ -8315,7 +8309,6 @@ $$
 $$
 \begin{aligned}
 \mathit{update}        :  \mathtt{L} \to \mathtt{E} \to \mathtt{S} \to \mathtt{S} \\
-
 \mathit{update} =
  \lambda\alpha\epsilon\sigma\;.\;\sigma[⟨\epsilon,\mathit{true}⟩/\alpha]
 \end{aligned}
@@ -8324,7 +8317,6 @@ $$
 $$
 \begin{aligned}
 \mathit{tievals}       :  ({\mathtt{L}}^{*} \to \mathtt{C}) \to {\mathtt{E}}^{*} \to \mathtt{C} \\
-
 \mathit{tievals} = \\
 \text{}\lambda\psi{\epsilon}^{*}\sigma\;.\;
    \#{\epsilon}^{*}=0\rightarrow\psi⟨\;⟩\sigma, \\
@@ -8342,7 +8334,6 @@ $$
 $$
 \begin{aligned}
 \mathit{tievalsrest}   :  ({\mathtt{L}}^{*} \to \mathtt{C}) \to {\mathtt{E}}^{*} \to \mathtt{N} \to \mathtt{C} \\
-
 \mathit{tievalsrest} = \\
 \text{}\lambda\psi{\epsilon}^{*}\nu\;.\;\mathit{list}\;
    (\mathit{dropfirst}\;{\epsilon}^{*}\nu) \\
@@ -8361,10 +8352,8 @@ $$\mathit{takefirst} =
 $$
 \begin{aligned}
 \mathit{truish}        :  \mathtt{E} \to \mathtt{T} \\
-
 \mathit{truish} =
   \lambda\epsilon\;.\;
-
      \epsilon = \mathit{false}\rightarrow
           \mathit{false},
           \mathit{true}
@@ -8380,7 +8369,6 @@ $$\mathit{unpermute}     :  {\mathtt{E}}^{*} \to {\mathtt{E}}^{*}
 $$
 \begin{aligned}
 \mathit{applicate}     :  \mathtt{E} \to {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C} \\
-
 \mathit{applicate} = \\
 \text{}\lambda\epsilon{\epsilon}^{*}\omega\kappa\;.\;
    \epsilon\;\in\;\mathtt{F}\rightarrow(\epsilon\;\vert\;\mathtt{F}\downarrow 2){\epsilon}^{*}\omega\kappa,
@@ -8391,7 +8379,6 @@ $$
 $$
 \begin{aligned}
 \mathit{onearg}      :  (\mathtt{E} \to {P} \to \mathtt{K} \to \mathtt{C}) \to ({\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C}) \\
-
 \mathit{onearg} = \\
 \text{}\lambda\zeta{\epsilon}^{*}\omega\kappa\;.\;
    \#{\epsilon}^{*}=1\rightarrow\zeta({\epsilon}^{*}\downarrow 1)\omega\kappa, \\
@@ -8402,7 +8389,6 @@ $$
 $$
 \begin{aligned}
 \mathit{twoarg}      :  (\mathtt{E} \to \mathtt{E} \to {P} \to \mathtt{K} \to \mathtt{C}) \to ({\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C}) \\
-
 \mathit{twoarg} = \\
 \text{}\lambda\zeta{\epsilon}^{*}\omega\kappa\;.\;
    \#{\epsilon}^{*}=2\rightarrow\zeta({\epsilon}^{*}\downarrow 1)({\epsilon}^{*}\downarrow 2)\omega\kappa, \\
@@ -8413,7 +8399,6 @@ $$
 $$
 \begin{aligned}
 \mathit{threearg}      :  (\mathtt{E} \to \mathtt{E} \to \mathtt{E} \to {P} \to \mathtt{K} \to \mathtt{C}) \to ({\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C}) \\
-
 \mathit{threearg} = \\
 \text{}\lambda\zeta{\epsilon}^{*}\omega\kappa\;.\;
    \#{\epsilon}^{*}=3\rightarrow\zeta({\epsilon}^{*}\downarrow 1)({\epsilon}^{*}\downarrow 2)({\epsilon}^{*}\downarrow 3)\omega\kappa, \\
@@ -8424,7 +8409,6 @@ $$
 $$
 \begin{aligned}
 \mathit{list}          :  {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C} \\
-
 \mathit{list} = \\
 \text{}\lambda{\epsilon}^{*}\omega\kappa\;.\;
    \#{\epsilon}^{*}=0\rightarrow\mathit{send}\;\mathit{null}\;\kappa, \\
@@ -8437,7 +8421,6 @@ $$
 $$
 \begin{aligned}
 \mathit{cons}          :  {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C} \\
-
 \mathit{cons} = \\
 \text{}\mathit{twoarg}\,(\lambda\epsilon_1\epsilon_2\kappa\omega\sigma\;.\;
    \mathit{new}\;\sigma\;\in\;\mathtt{L}\rightarrow \\
@@ -8461,7 +8444,6 @@ $$
 $$
 \begin{aligned}
 \mathit{less}          :  {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C} \\
-
 \mathit{less} = \\
 \text{}\mathit{twoarg}\,(\lambda\epsilon_1\epsilon_2\omega\kappa\;.\;
    (\epsilon_1\;\in\;\mathtt{R}\wedge\epsilon_2\;\in\;\mathtt{R})\rightarrow \\
@@ -8477,7 +8459,6 @@ $$
 $$
 \begin{aligned}
 \mathit{add}          :  {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C} \\
-
 \mathit{add} = \\
 \text{}\mathit{twoarg}\,(\lambda\epsilon_1\epsilon_2\omega\kappa\;.\;
    (\epsilon_1\;\in\;\mathtt{R}\wedge\epsilon_2\;\in\;\mathtt{R})\rightarrow \\
@@ -8491,7 +8472,6 @@ $$
 $$
 \begin{aligned}
 \mathit{car}          :  {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C} \\
-
 \mathit{car} = \\
 \text{}\mathit{onearg}\,(\lambda\epsilon\omega\kappa\;.\;
    \epsilon\;\in\;\text{\texttt{E}\textrm{p}}\rightarrow
@@ -8503,7 +8483,6 @@ $$
 $$
 \begin{aligned}
 \mathit{car-internal}          :  \mathtt{E} \to \mathtt{K} \to \mathtt{C} \\
-
 \mathit{car-internal} =
  \text{}\lambda\epsilon\omega\kappa\;.\;
    \mathit{hold}\, (\epsilon\;\vert\;\text{\texttt{E}\textrm{p}}\downarrow 1) \kappa
@@ -8519,7 +8498,6 @@ $$\mathit{cdr-internal} :  \mathtt{E} \to \mathtt{K} \to \mathtt{C}
 $$
 \begin{aligned}
 \mathit{setcar}          :  {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C} \\
-
 \mathit{setcar} = \\
 \text{}\mathit{twoarg}\,(\lambda\epsilon_1\epsilon_2\omega\kappa\;.\;
    \epsilon_1\;\in\;\text{\texttt{E}\textrm{p}}\rightarrow \\
@@ -8535,7 +8513,6 @@ $$
 $$
 \begin{aligned}
 \mathit{eqv}          :  {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C} \\
-
 \mathit{eqv} = \\
 \text{}\mathit{twoarg}\,(\lambda\epsilon_1\epsilon_2\omega\kappa\;.\;
    (\epsilon_1\;\in\;\mathtt{M}\wedge\epsilon_2\;\in\;\mathtt{M})\rightarrow \\
@@ -8565,10 +8542,8 @@ $$
 (\epsilon_2\;\vert\;\text{\texttt{E}\textrm{p}})) \\
 \kappa, \\
 (\epsilon_1\;\in\;\text{\texttt{E}\textrm{v}}\wedge\epsilon_2\;\in\;\text{\texttt{E}\textrm{v}})\rightarrow
-
 \ldots, \\
 (\epsilon_1\;\in\;\text{\texttt{E}\textrm{s}}\wedge\epsilon_2\;\in\;\text{\texttt{E}\textrm{s}})\rightarrow
-
 \ldots, \\
 (\epsilon_1\;\in\;\mathtt{F}\wedge\epsilon_2\;\in\;\mathtt{F})\rightarrow \\
 \text{}\mathit{send}\,
@@ -8583,7 +8558,6 @@ $$
 $$
 \begin{aligned}
 \mathit{apply}          :  {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C} \\
-
 \mathit{apply} = \\
 \text{}\mathit{twoarg}\,(\lambda\epsilon_1\epsilon_2\omega\kappa\;.\;
    \epsilon_1\;\in\;\mathtt{F}\rightarrow
@@ -8596,7 +8570,6 @@ $$
 $$
 \begin{aligned}
 \mathit{valueslist}          :  \mathtt{E} \to \mathtt{K} \to \mathtt{C} \\
-
 \mathit{valueslist} = \\
 \text{}\lambda\epsilon\kappa\;.\;
    \epsilon\;\in\;\text{\texttt{E}\textrm{p}}\rightarrow \\
@@ -8617,9 +8590,7 @@ $$
 $$
 \begin{aligned}
 \mathit{cwcc}          :  {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C} \\
-
      \text{\qquad [\texttt{call-with-current-continuation}]} \\
-
 \mathit{cwcc} = \\
 \text{}\mathit{onearg}\,(\lambda\epsilon\omega\kappa\;.\;
    \epsilon\;\in\;\mathtt{F}\rightarrow \\
@@ -8645,7 +8616,6 @@ $$
 $$
 \begin{aligned}
 \mathit{travel} : {P} \to {P} \to \mathtt{C} \to \mathtt{C} \\
-
 \mathit{travel} =  \\
 \text{}\lambda\omega_1\omega_2\;.\;
   \mathit{travelpath}\;((\mathit{pathup}\;\omega_1(\mathit{commonancest}\;\omega_1\omega_2)) \;§\; \\
@@ -8656,7 +8626,6 @@ $$
 $$
 \begin{aligned}
 \mathit{pointdepth} : {P} \to \mathtt{N} \\
-
 \mathit{pointdepth} =  \\
 \text{}\lambda\omega\;.\; \omega = \textit{root} \rightarrow 0,
   1 + (\mathit{pointdepth}\;(\omega\;\vert\;(\mathtt{F} \times \mathtt{F} \times
@@ -8667,7 +8636,6 @@ $$
 $$
 \begin{aligned}
 \mathit{ancestors} : {P} \to \mathcal{P}{P} \\
-
 \mathit{ancestors} =  \\
 \text{}\lambda\omega\;.\; \omega = \textit{root} \rightarrow \{\omega\},
   \{\omega\}\;\cup\;(\mathit{ancestors}\;(\omega\;\vert\;(\mathtt{F} \times \mathtt{F} \times
@@ -8678,7 +8646,6 @@ $$
 $$
 \begin{aligned}
 \mathit{commonancest} : {P} \to {P} \to {P} \\
-
 \mathit{commonancest} =  \\
 \text{}\lambda\omega_1\omega_2\;.\;
   \textrm{the only element of } \\
@@ -8693,7 +8660,6 @@ $$
 $$
 \begin{aligned}
 \mathit{pathup} : {P} \to {P} \to {({P} \times \mathtt{F})}^{*} \\
-
 \mathit{pathup} =  \\
 \text{}\lambda\omega_1\omega_2\;.\;
   \omega_1=\omega_2\rightarrow⟨⟩, \\
@@ -8706,7 +8672,6 @@ $$
 $$
 \begin{aligned}
 \mathit{pathdown} : {P} \to {P} \to {({P} \times \mathtt{F})}^{*} \\
-
 \mathit{pathdown} =  \\
 \text{}\lambda\omega_1\omega_2\;.\;
   \omega_1=\omega_2\rightarrow⟨⟩, \\
@@ -8719,7 +8684,6 @@ $$
 $$
 \begin{aligned}
 \mathit{travelpath} : {({P} \times \mathtt{F})}^{*} \to \mathtt{C} \to \mathtt{C} \\
-
 \mathit{travelpath} =  \\
 \text{}\lambda{\pi}^{*}\theta\;.\;
   \#{\pi}^{*}=0\rightarrow\theta, \\
@@ -8731,7 +8695,6 @@ $$
 $$
 \begin{aligned}
 \mathit{dynamicwind} : {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C} \\
-
 \mathit{dynamicwind} =  \\
 \text{}\mathit{threearg}\,(\lambda\epsilon_1\epsilon_2\epsilon_3\omega\kappa\;.\;
   (\epsilon_1\;\in\;\mathtt{F}\wedge\epsilon_2\;\in\;\mathtt{F}\wedge\epsilon_3\;\in\;\mathtt{F})\rightarrow \\
@@ -8747,7 +8710,6 @@ $$
 $$
 \begin{aligned}
 \mathit{values}          :  {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C} \\
-
 \mathit{values} =
  \lambda{\epsilon}^{*}\omega\kappa\;.\;\kappa{\epsilon}^{*}
 \end{aligned}
@@ -8757,7 +8719,6 @@ $$
 \begin{aligned}
 \mathit{cwv}          :  {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C}
     \text{\qquad [\texttt{call-with-values}]} \\
-
 \mathit{cwv} = \\
 \text{}\mathit{twoarg}\,(\lambda\epsilon_1\epsilon_2\omega\kappa\;.\;
    \mathit{applicate}\;\epsilon_1⟨\;⟩\omega

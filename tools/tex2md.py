@@ -1503,7 +1503,22 @@ def convert_group_file(spec_dir, outbase, files, labels, citefile, mode, outfile
         _UNRESOLVED.update(ctx['unresolved'])
     body = '\n'.join(parts)
     body = re.sub(r'\n{3,}', '\n\n', body).strip() + '\n'
+    body = _collapse_math_blanks(body)
     return body
+
+
+def _collapse_math_blanks(body):
+    """Remove blank lines inside $$...$$ display-math blocks.
+
+    GitHub treats a blank line as a paragraph break that terminates a math
+    block early, so a multi-line equation with an internal blank line splits
+    and its remainder renders as (invalid) text. The equation content is valid;
+    only the blank lines must go.
+    """
+    def repl(m):
+        inner = re.sub(r'\n[ \t]*\n+', '\n', m.group(1))
+        return '$$' + inner + '$$'
+    return re.sub(r'\$\$(.*?)\$\$', repl, body, flags=re.DOTALL)
 
 
 _UNRESOLVED = set()
