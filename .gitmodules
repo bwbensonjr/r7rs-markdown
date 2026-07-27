@@ -1,0 +1,3 @@
+[submodule "r7rs-spec"]
+	path = r7rs-spec
+	url = https://github.com/johnwcowan/r7rs-spec.git
