@@ -1057,17 +1057,17 @@ The value of $\log 0$ is mathematically undefined.
 With $\log$ defined this way, the values of $\sin^{-1} z$, $\cos^{-1} z$,
 and $\tan^{-1} z$ are according to the following formul:
 
-$$
+```math
 \sin^{-1} z = -i \log (i z + \sqrt{1 - z^2})
-$$
+```
 
-$$
+```math
 \cos^{-1} z = \pi / 2 - \sin^{-1} z
-$$
+```
 
-$$
+```math
 \tan^{-1} z = (\log (1 + i z) - \log (1 - i z)) / (2 i)
-$$
+```
 
 However, `(log 0.0)` returns `-inf.0`
 (and `(log -0.0)` returns `-inf.0+$\pi$i`) if the
@@ -1144,9 +1144,9 @@ ${k} = s^2 + r$ and ${k} < (s+1)^2$.
 
 Returns *z*₁ raised to the power *z*₂. For nonzero *z*₁, this is
 
-$$
+```math
 {z_1}^{z_2} = e^{z_2 \log {z_1}}
-$$
+```
 
 The value of $0^z$ is $1$ if `(zero? z)`, $0$ if `(real-part z)`
 is positive, and an error otherwise. Similarly for $0.0^z$,
@@ -1168,10 +1168,10 @@ with inexact results.
 Let *x*₁, *x*₂, *x*₃, and *x*₄ be
 real numbers and *z* be a complex number such that
 
-$$
+```math
 {z} = {x_{1}} + {x_{2}}{i}
  = {x_{3}} \cdot e^{i x_4}
-$$
+```
 
 Then all of
 

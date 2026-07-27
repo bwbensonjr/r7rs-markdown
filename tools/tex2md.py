@@ -848,6 +848,18 @@ def _cleanup_paragraph(md):
     return md.strip()
 
 
+def mathblock(body):
+    """Emit display math as a ```math fenced block.
+
+    GitHub applies Markdown processing (e.g. emphasis: * and _) to the contents
+    of $$...$$ display blocks, which corrupts TeX such as ^{*}. A ```math fenced
+    code block is passed to MathJax verbatim, so backslashes, *, _, #, {, } all
+    survive. Blank lines are dropped (they would break MathJax alignment).
+    """
+    lines = [l for l in body.split('\n') if l.strip() != '']
+    return ['', '```math'] + lines + ['```', '']
+
+
 def _collect_display_math(lines, i, ctx):
     # Collect from the opening $$ to the matching closing $$ (may be same line).
     parts = []
@@ -866,7 +878,7 @@ def _collect_display_math(lines, i, ctx):
     body = '\n'.join(parts).strip()
     body = body.replace('\\ldots', '\\dots')
     body = normalize_math(body)
-    return ['', '$$', body, '$$', ''], i
+    return mathblock(body), i
 
 
 # ---- environment dispatch ----
@@ -1228,10 +1240,11 @@ def env_tabular(first_rem, inner, ctx):
         if not arr:
             return ['']
         colspec = 'l' * max(ncol, 1)
-        body = ['%s \\\\' % ' & '.join(row + [''] * (ncol - len(row)))
-                for row in arr]
-        return ['', '$$', '\\begin{array}{%s}' % colspec] + body + \
-               ['\\end{array}', '$$', '']
+        rows_tex = ['%s \\\\' % ' & '.join(row + [''] * (ncol - len(row)))
+                    for row in arr]
+        body = '\n'.join(['\\begin{array}{%s}' % colspec] + rows_tex +
+                         ['\\end{array}'])
+        return mathblock(body)
 
     table = []
     ncol = 0
@@ -1314,9 +1327,9 @@ def env_semfun(first_rem, inner, ctx):
     if not lines_m:
         return ['']
     if len(lines_m) == 1:
-        return ['', '$$%s$$' % lines_m[0], '']
+        return mathblock(lines_m[0])
     body_math = ' \\\\\n'.join(lines_m)
-    return ['', '$$', '\\begin{aligned}', body_math, '\\end{aligned}', '$$', '']
+    return mathblock('\\begin{aligned}\n' + body_math + '\n\\end{aligned}')
 
 
 def env_center(first_rem, inner, ctx):

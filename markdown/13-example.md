@@ -2,9 +2,9 @@
 
 The procedure `integrate-system` integrates the system
 
-$$
+```math
 y_k^\prime = f_k(y_1, y_2, \dots, y_n), \; k = 1, \dots, n
-$$
+```
 
 of differential equations with the method of Runge-Kutta.
 
@@ -100,13 +100,13 @@ of the stream.
 The following illustrates the use of `integrate-system` in
 integrating the system
 
-$$
+```math
 C {dv_C \over dt} = -i_L - {v_C \over R}
-$$
+```
 
-$$
+```math
 L {di_L \over dt} = v_C
-$$
+```
 
 which models a damped oscillator.
 
