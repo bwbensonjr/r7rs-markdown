@@ -1169,7 +1169,7 @@ Let *x*₁, *x*₂, *x*₃, and *x*₄ be
 real numbers and *z* be a complex number such that
 
 $$
-{z} = {x_{1}} + {x_{2}}i
+{z} = {x_{1}} + {x_{2}}{i}
  = {x_{3}} \cdot e^{i x_4}
 $$
 

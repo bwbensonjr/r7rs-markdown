@@ -95,7 +95,7 @@ but a ⟨delimiter⟩ or the end of file.
 <a id="extendedalphas"></a>
 <a id="identifiersyntax"></a>
 
-0⟨identifier⟩ $⟨$
+0`⟨identifier⟩`
 
 Note that `+i`, `-i` and ⟨infnan⟩ below are exceptions to the
 ⟨peculiar identifier⟩ rule; they are parsed as numbers, not
@@ -157,7 +157,7 @@ identifiers.
 
 The following rules for ⟨num $R$⟩, ⟨complex $R$⟩, ⟨real
 $R$⟩, ⟨ureal $R$⟩, ⟨uinteger $R$⟩, and ⟨prefix $R$⟩
-are implicitly replicated for $R = 2, 8, 10,$
+are implicitly replicated for R = 2, 8, 10,
 and $16$. There are no rules for ⟨decimal $2$⟩, ⟨decimal
 $8$⟩, and ⟨decimal $16$⟩, which means that numbers containing
 decimal points or exponents are always in decimal radix.
@@ -480,16 +480,19 @@ and notation used here are described in [[Stoy77](14-references.md#cite-stoy77)]
 `dynamic-wind` is taken from [[GasbichlerKnauelSperberKelsey2003](14-references.md#cite-gasbichlerknauelsperberkelsey2003)].
 The notation is summarized below:
 
-| $⟨\,\dots\,⟩$ | sequence formation |
-| --- | --- |
-| $s \downarrow k$ | $k$th member of the sequence $s$ (1-based) |
-| $\#s$ | length of sequence $s$ |
-| $s \;§\; t$ | concatenation of sequences $s$ and $t$ |
-| $s \dagger k$ | drop the first $k$ members of sequence $s$ |
-| $t \rightarrow a, b$ | McCarthy conditional “if $t$ then $a$ else $b$” |
-| $\rho[x/i]$ | substitution “$\rho$ with $x$ for $i$” |
-| $x\mathrm{in }{\texttt{D}}$ | injection of $x$ into domain $\texttt{D}$ |
-| $x\,\vert\,\texttt{D}$ | projection of $x$ to domain $\texttt{D}$ |
+$$
+\begin{array}{ll}
+⟨\,\ldots\,⟩ & \text{sequence formation} \\
+s \downarrow k & k\text{th member of the sequence }s\text{ (1-based)} \\
+\#s & \text{length of sequence }s \\
+s \;§\; t & \text{concatenation of sequences }s\text{ and }t \\
+s \dagger k & \text{drop the first }k\text{ members of sequence }s \\
+t \rightarrow a, b & \text{McCarthy conditional “if }t\text{ then }a\text{ else }b\text{”} \\
+\rho[x/i] & \text{substitution “}\rho\text{ with }x\text{ for }i\text{”} \\
+x\mathrm{in }{\texttt{D}} & \text{injection of }x\text{ into domain }\texttt{D} \\
+x\,\vert\,\texttt{D} & \text{projection of }x\text{ to domain }\texttt{D} \\
+\end{array}
+$$
 
 The reason that expression continuations take sequences of values instead
 of single values is to simplify the formal treatment of procedure calls
@@ -506,7 +509,7 @@ any given number of arguments), but it is a closer approximation to the intended
 semantics than a left-to-right evaluation would be.
 
 The storage allocator *new* is implementation-dependent, but it must
-obey the following axiom: if $\mathit{new}\;\sigma\;\in\;\mathtt{L}$, then
+obey the following axiom: if new::∈:`L`, then
 $\sigma\;(\mathit{new}\;\sigma\;\vert\;\mathtt{L})\downarrow 2 = \mathit{false}$.
 
 The definition of $\mathcal{K}$ is omitted because an accurate definition of
@@ -530,62 +533,67 @@ $\mathcal{E}$ is the semantic function that assigns meaning to expressions.
 
 |$\vert$
 
-| c@ l@l
- K & ∈ &  Con & constants, including quotations |  |  |  |
-| --- | --- | --- | --- |
-| I | ∈ | Ide | identifiers (variables) |
-| E | ∈ | Exp | expressions |
-| $\Gamma$ | ∈ | Com $=$  Exp | commands |
+$$
+\begin{array}{llll}
+\mathrm{K} & \in & \text{\hboxCon} & \text{constants, including quotations} \\
+\mathrm{I} & \in & \text{\hboxIde} & \text{identifiers (variables)} \\
+\mathrm{E} & \in & \text{\hboxExp} & \text{expressions} \\
+{\Gamma} & \in & \text{\hboxCom }=\text{ \hboxExp} & \text{commands} \\
+\end{array}
+$$
 
 0=` Exp `
 1=to 10 |
 
 ```bnf
  Exp ⟶  K  |   I  |  ( E₀  E*)
-  (lambda ( I*) Γ*  E₀)
-  (lambda ( I* .  I) Γ*  E₀)
-  (lambda  I Γ*  E₀)
+  (lambda ( I*) \Gamma*  E₀)
+  (lambda ( I* .  I) \Gamma*  E₀)
+  (lambda  I \Gamma*  E₀)
   (if  E₀  E₁  E₂)  |  (if  E₀  E₁)
   (set!  I  E)
 ```
 
 ### Domain equations
 
-| r@ c@ l@ l@ ll
-$\alpha$   & ∈ & `L` & &          & locations |  |  |  |  |  |
-| --- | --- | --- | --- | --- | --- |
-| $\nu$ | ∈ | `N` |  |  | natural numbers |
-|  |  | `T` | = | $\{$ false, true$\}$ | booleans |
-|  |  | `Q` |  |  | symbols |
-|  |  | `H` |  |  | characters |
-|  |  | `R` |  |  | numbers |
-|  |  | `E`$_\mathrm{p}$ | = | $\mathtt{L} \times \mathtt{L} \times \mathtt{T}$ | pairs |
-|  |  | `E`$_\mathrm{v}$ | = | ${\mathtt{L}}^{*} \times \mathtt{T}$ | vectors |
-|  |  | `E`$_\mathrm{s}$ | = | ${\mathtt{L}}^{*} \times \mathtt{T}$ | strings |
-|  |  | `M` | = | [0pt][l]$\{$ false, true, 
-                                null, undefined, unspecified$\}$ |  |
-|  |  |  |  |  | miscellaneous |
-| $\phi$ | ∈ | `F` | = | $\mathtt{L}\times({\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C})$ | procedure values |
-| $\epsilon$ | ∈ | `E` | = | [0pt][l]$\mathtt{Q}+\mathtt{H}+\mathtt{R}+\text{\texttt{E}\textrm{p}}+\text{\texttt{E}\textrm{v}}+\text{\texttt{E}\textrm{s}}+\mathtt{M}+\mathtt{F}$ |  |
-|  |  |  |  |  | expressed values |
-| $\sigma$ | ∈ | `S` | = | $\mathtt{L}\to(\mathtt{E}\times\mathtt{T})$ | stores |
-| $\rho$ | ∈ | `U` | = | $\mathrm{Ide}\to\mathtt{L}$ | environments |
-| $\theta$ | ∈ | `C` | = | $\mathtt{S}\to\mathtt{A}$ | command conts |
-| $\kappa$ | ∈ | `K` | = | ${\mathtt{E}}^{*}\to\mathtt{C}$ | expression conts |
-|  |  | `A` |  |  | answers |
-|  |  | `X` |  |  | errors |
-| $\omega$ | ∈ | P | = | $(\mathtt{F} \times \mathtt{F} \times {P}) + \{\textit{root}\}$ | dynamic points |
+$$
+\begin{array}{llllll}
+\alpha & \in & \mathtt{L} &  &  & \text{locations} \\
+\nu & \in & \mathtt{N} &  &  & \text{natural numbers} \\
+ &  & \mathtt{T} & = & \{\text{false, true}\} & \text{booleans} \\
+ &  & \mathtt{Q} &  &  & \text{symbols} \\
+ &  & \mathtt{H} &  &  & \text{characters} \\
+ &  & \mathtt{R} &  &  & \text{numbers} \\
+ &  & {\mathtt{E}_\mathrm{p}} & = & \mathtt{L} \times \mathtt{L} \times \mathtt{T} & \text{pairs} \\
+ &  & {\mathtt{E}_\mathrm{v}} & = & {\mathtt{L}}^{*} \times \mathtt{T} & \text{vectors} \\
+ &  & {\mathtt{E}_\mathrm{s}} & = & {\mathtt{L}}^{*} \times \mathtt{T} & \text{strings} \\
+ &  & \mathtt{M} & = & \text{\false, true, null, undefined, unspecified\}} &  \\
+ &  &  &  &  & \text{miscellaneous} \\
+\phi & \in & \mathtt{F} & = & \mathtt{L}\times({\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C}) & \text{procedure values} \\
+\epsilon & \in & \mathtt{E} & = & {\mathtt{Q}+\mathtt{H}+\mathtt{R}+{\mathtt{E}_\mathrm{p}}+{\mathtt{E}_\mathrm{v}}+{\mathtt{E}_\mathrm{s}}+\mathtt{M}+\mathtt{F}} &  \\
+ &  &  &  &  & \text{expressed values} \\
+\sigma & \in & \mathtt{S} & = & \mathtt{L}\to(\mathtt{E}\times\mathtt{T}) & \text{stores} \\
+\rho & \in & \mathtt{U} & = & \mathrm{Ide}\to\mathtt{L} & \text{environments} \\
+\theta & \in & \mathtt{C} & = & \mathtt{S}\to\mathtt{A} & \text{command conts} \\
+\kappa & \in & \mathtt{K} & = & {\mathtt{E}}^{*}\to\mathtt{C} & \text{expression conts} \\
+ &  & \mathtt{A} &  &  & \text{answers} \\
+ &  & \mathtt{X} &  &  & \text{errors} \\
+\omega & \in & {P} & = & (\mathtt{F} \times \mathtt{F} \times {P}) + \{\textit{root}\} & \text{dynamic points} \\
+\end{array}
+$$
 
 ### Semantic functions
 
-| r@ l
-  $\mathcal{K}:$ & $\mathrm{Con}\to\mathtt{E}$ |  |
-| --- | --- |
-| $\mathcal{E}:$ | $\mathrm{Exp}\to\mathtt{U}\to{P}\to\mathtt{K}\to\mathtt{C}$ |
-| $\mathcal{E}^{*}:$ | ${\mathrm{Exp}}^{*}\to\mathtt{U}\to{P}\to\mathtt{K}\to\mathtt{C}$ |
-| $\mathcal{C}:$ | ${\mathrm{Com}}^{*}\to\mathtt{U}\to{P}\to\mathtt{C}\to\mathtt{C}$ |
+$$
+\begin{array}{ll}
+\mathcal{K}: & \mathrm{Con}\to\mathtt{E} \\
+\mathcal{E}: & \mathrm{Exp}\to\mathtt{U}\to{P}\to\mathtt{K}\to\mathtt{C} \\
+{\mathcal{E}}^{*}: & {\mathrm{Exp}}^{*}\to\mathtt{U}\to{P}\to\mathtt{K}\to\mathtt{C} \\
+\mathcal{C}: & {\mathrm{Com}}^{*}\to\mathtt{U}\to{P}\to\mathtt{C}\to\mathtt{C} \\
+\end{array}
+$$
 
-Definition of $\mathcal{K}$ deliberately omitted.
+Definition of K deliberately omitted.
 
 $$\mathcal{E}⟦\mathrm{K}⟧ =
   \lambda\rho\omega\kappa\;.\;\mathit{send}\,(\mathcal{K}⟦\mathrm{K}⟧)\,\kappa$$
@@ -604,8 +612,8 @@ $$
 
 $$
 \begin{aligned}
-\mathcal{E}⟦\text{\texttt{(\textrm{E}0 {\textrm{E}}{*})}}⟧ = \\
-\text{}\lambda\rho\omega\kappa\;.\;\mathcal{E}^{*}
+\mathcal{E}⟦{\texttt{(\textrm{E}0 {\textrm{E}}{*})}}⟧ = \\
+\text{}\lambda\rho\omega\kappa\;.\;{\mathcal{E}}^{*}
     (\mathit{permute}(⟨\mathrm{E}_0⟩\;§\;{\mathrm{E}}^{*})) \\
 \rho\; \\
 \omega\; \\
@@ -620,7 +628,7 @@ $$
 
 $$
 \begin{aligned}
-\mathcal{E}⟦\text{\texttt{(\texttt{lambda} ({\textrm{I}}{*}) {Γ}{*} \textrm{E}0)}}⟧ = \\
+\mathcal{E}⟦{\texttt{(\texttt{lambda} ({\textrm{I}}{*}) {{Γ}}{*} \textrm{E}0)}}⟧ = \\
 \text{}\lambda\rho\omega\kappa\;.\;\lambda\sigma\;.\; \\
 \text{}\mathit{new}\;\sigma\;\in\;\mathtt{L}\rightarrow \\
 \text{}\mathit{send}\;
@@ -630,7 +638,7 @@ $$
                \#{\epsilon}^{*} = \#{{\mathrm{I}}^{*}}\rightarrow \\
 \text{}\mathit{tievals}
                    (\lambda{\alpha}^{*}\;.\;
-                         (\lambda\rho^\prime\;.\;\mathcal{C}⟦{\Gamma}^{*}⟧\rho^\prime\omega^\prime
+                         (\lambda\rho^\prime\;.\;\mathcal{C}⟦{{\Gamma}}^{*}⟧\rho^\prime\omega^\prime
                               (\mathcal{E}⟦\mathrm{E}_0⟧\rho^\prime\omega^\prime\kappa^\prime)) \\
 (\mathit{extends}\;\rho\;{{\mathrm{I}}^{*}}\;{\alpha}^{*})) \\
 {\epsilon}^{*}, \\
@@ -646,7 +654,7 @@ $$
 
 $$
 \begin{aligned}
-\mathcal{E}⟦\text{\texttt{(lambda ({\textrm{I}}{*} .\ \textrm{I}) {Γ}{*} \textrm{E}0)}}⟧ = \\
+\mathcal{E}⟦{\texttt{(lambda ({\textrm{I}}{*} .\ \textrm{I}) {{Γ}}{*} \textrm{E}0)}}⟧ = \\
 \text{}\lambda\rho\omega\kappa\;.\;\lambda\sigma\;.\; \\
 \text{}\mathit{new}\;\sigma\;\in\;\mathtt{L}\rightarrow \\
 \text{}\mathit{send}\;
@@ -656,7 +664,7 @@ $$
                \#{\epsilon}^{*} \geq \#{\mathrm{I}}^{*}\rightarrow \\
 \text{}\mathit{tievalsrest} \\
 \text{}(\lambda{\alpha}^{*}\;.\;
-                           (\lambda\rho^\prime\;.\;\mathcal{C}⟦{\Gamma}^{*}⟧\rho^\prime\omega^\prime
+                           (\lambda\rho^\prime\;.\;\mathcal{C}⟦{{\Gamma}}^{*}⟧\rho^\prime\omega^\prime
                                (\mathcal{E}⟦\mathrm{E}_0⟧\rho^\prime\omega^\prime\kappa^\prime)) \\
 (\mathit{extends}\;\rho
                                \;({\mathrm{I}}^{*}\;§\;⟨\mathrm{I}⟩)
@@ -672,12 +680,12 @@ $$
 \end{aligned}
 $$
 
-$$\mathcal{E}⟦\text{\texttt{(lambda \textrm{I} {Γ}{*} \textrm{E}0)}}⟧ =
- \mathcal{E}⟦\text{\texttt{(lambda (.\ \textrm{I}) {Γ}{*} \textrm{E}0)}}⟧$$
+$$\mathcal{E}⟦{\texttt{(lambda \textrm{I} {{Γ}}{*} \textrm{E}0)}}⟧ =
+ \mathcal{E}⟦{\texttt{(lambda (.\ \textrm{I}) {{Γ}}{*} \textrm{E}0)}}⟧$$
 
 $$
 \begin{aligned}
-\mathcal{E}⟦\text{\texttt{(\texttt{if} \textrm{E}0 \textrm{E}1 \textrm{E}2)}}⟧ = \\
+\mathcal{E}⟦{\texttt{(\texttt{if} \textrm{E}0 \textrm{E}1 \textrm{E}2)}}⟧ = \\
 \text{}\lambda\rho\omega\kappa\;.\;
    \mathcal{E}⟦\mathrm{E}_0⟧\;\rho\omega\;(\mathit{single}\;(\lambda\epsilon\;.\;
     \mathit{truish}\;\epsilon\rightarrow\mathcal{E}⟦\mathrm{E}_1⟧\rho\omega\kappa, \\
@@ -687,7 +695,7 @@ $$
 
 $$
 \begin{aligned}
-\mathcal{E}⟦\text{\texttt{(if \textrm{E}0 \textrm{E}1)}}⟧ = \\
+\mathcal{E}⟦{\texttt{(if \textrm{E}0 \textrm{E}1)}}⟧ = \\
 \text{}\lambda\rho\omega\kappa\;.\;
    \mathcal{E}⟦\mathrm{E}_0⟧\;\rho\omega\;(\mathit{single}\;(\lambda\epsilon\;.\;
     \mathit{truish}\;\epsilon\rightarrow\mathcal{E}⟦\mathrm{E}_1⟧\rho\omega\kappa, \\
@@ -709,16 +717,16 @@ $$
 \end{aligned}
 $$
 
-$$\mathcal{E}^{*}⟦\;⟧ =
+$${\mathcal{E}}^{*}⟦\;⟧ =
   \lambda\rho\omega\kappa\;.\;\kappa⟨\;⟩$$
 
 $$
 \begin{aligned}
-\mathcal{E}^{*}⟦\mathrm{E}_0\;{\mathrm{E}}^{*}⟧ = \\
+{\mathcal{E}}^{*}⟦\mathrm{E}_0\;{\mathrm{E}}^{*}⟧ = \\
 \text{}\lambda\rho\omega\kappa\;.\;
       \mathcal{E}⟦\mathrm{E}_0⟧\;\rho\omega\;
          (\mathit{single}
-            (\lambda\epsilon_0\;.\;\mathcal{E}^{*}⟦{\mathrm{E}}^{*}⟧
+            (\lambda\epsilon_0\;.\;{\mathcal{E}}^{*}⟦{\mathrm{E}}^{*}⟧
                 \;\rho\omega\;(\lambda{\epsilon}^{*}\;.\;
                            \kappa\;(⟨\epsilon_0⟩\;§\;{\epsilon}^{*}))))
 \end{aligned}
@@ -726,9 +734,9 @@ $$
 
 $$\mathcal{C}⟦\;⟧ = \lambda\rho\omega\theta\,.\;\theta$$
 
-$$\mathcal{C}⟦\Gamma_0\;{\Gamma}^{*}⟧ =
-  \lambda\rho\omega\theta\;.\;\mathcal{E}⟦\Gamma_0⟧\;\rho\omega\;(\lambda{\epsilon}^{*}\;.\;
-   \mathcal{C}⟦{\Gamma}^{*}⟧\rho\omega\theta)$$
+$$\mathcal{C}⟦{\Gamma}_0\;{{\Gamma}}^{*}⟧ =
+  \lambda\rho\omega\theta\;.\;\mathcal{E}⟦{\Gamma}_0⟧\;\rho\omega\;(\lambda{\epsilon}^{*}\;.\;
+   \mathcal{C}⟦{{\Gamma}}^{*}⟧\rho\omega\theta)$$
 
 ### Auxiliary functions
 
@@ -959,7 +967,7 @@ $$
 \mathit{car}          :  {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C} \\
 \mathit{car} = \\
 \text{}\mathit{onearg}\,(\lambda\epsilon\omega\kappa\;.\;
-   \epsilon\;\in\;\text{\texttt{E}\textrm{p}}\rightarrow
+   \epsilon\;\in\;{\mathtt{E}_\mathrm{p}}\rightarrow
           \mathit{car-internal}\;\epsilon\kappa, \\
 \text{}\mathit{wrong }\mathrm{\text{“}non-pair argument to { car}\text{”}})
 \end{aligned}
@@ -970,7 +978,7 @@ $$
 \mathit{car-internal}          :  \mathtt{E} \to \mathtt{K} \to \mathtt{C} \\
 \mathit{car-internal} =
  \text{}\lambda\epsilon\omega\kappa\;.\;
-   \mathit{hold}\, (\epsilon\;\vert\;\text{\texttt{E}\textrm{p}}\downarrow 1) \kappa
+   \mathit{hold}\, (\epsilon\;\vert\;{\mathtt{E}_\mathrm{p}}\downarrow 1) \kappa
 \end{aligned}
 $$
 
@@ -985,9 +993,9 @@ $$
 \mathit{setcar}          :  {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C} \\
 \mathit{setcar} = \\
 \text{}\mathit{twoarg}\,(\lambda\epsilon_1\epsilon_2\omega\kappa\;.\;
-   \epsilon_1\;\in\;\text{\texttt{E}\textrm{p}}\rightarrow \\
-(\epsilon_1\;\vert\;\text{\texttt{E}\textrm{p}}\downarrow 3)\rightarrow
-          \mathit{assign}\,(\epsilon_1\;\vert\;\text{\texttt{E}\textrm{p}}\downarrow 1) \\
+   \epsilon_1\;\in\;{\mathtt{E}_\mathrm{p}}\rightarrow \\
+(\epsilon_1\;\vert\;{\mathtt{E}_\mathrm{p}}\downarrow 3)\rightarrow
+          \mathit{assign}\,(\epsilon_1\;\vert\;{\mathtt{E}_\mathrm{p}}\downarrow 1) \\
 \epsilon_2 \\
 (\mathit{send}\;\mathit{unspecified}\;\kappa), \\
 \mathit{wrong }\mathrm{\text{“}immutable argument to { set-car!}\text{”}}, \\
@@ -1016,19 +1024,19 @@ $$
 \text{}\mathit{send}\,
        (\epsilon_1\;\vert\;\mathtt{R}=\epsilon_2\;\vert\;\mathtt{R}\rightarrow\mathit{true},
             \mathit{false})\kappa, \\
-(\epsilon_1\;\in\;\text{\texttt{E}\textrm{p}}\wedge\epsilon_2\;\in\;\text{\texttt{E}\textrm{p}})\rightarrow \\
+(\epsilon_1\;\in\;{\mathtt{E}_\mathrm{p}}\wedge\epsilon_2\;\in\;{\mathtt{E}_\mathrm{p}})\rightarrow \\
 \text{}\mathit{send}\,
        ((\lambda{p_1}{p_2}\;.\;
                 (({p_1}\downarrow 1) = ({p_2}\downarrow 1)\wedge \\
 ({p_1}\downarrow 2) = ({p_2}\downarrow 2))
                      \rightarrow\mathit{true}, \\
 \text{}\mathit{false}) \\
-(\epsilon_1\;\vert\;\text{\texttt{E}\textrm{p}}) \\
-(\epsilon_2\;\vert\;\text{\texttt{E}\textrm{p}})) \\
+(\epsilon_1\;\vert\;{\mathtt{E}_\mathrm{p}}) \\
+(\epsilon_2\;\vert\;{\mathtt{E}_\mathrm{p}})) \\
 \kappa, \\
-(\epsilon_1\;\in\;\text{\texttt{E}\textrm{v}}\wedge\epsilon_2\;\in\;\text{\texttt{E}\textrm{v}})\rightarrow
+(\epsilon_1\;\in\;{\mathtt{E}_\mathrm{v}}\wedge\epsilon_2\;\in\;{\mathtt{E}_\mathrm{v}})\rightarrow
 \ldots, \\
-(\epsilon_1\;\in\;\text{\texttt{E}\textrm{s}}\wedge\epsilon_2\;\in\;\text{\texttt{E}\textrm{s}})\rightarrow
+(\epsilon_1\;\in\;{\mathtt{E}_\mathrm{s}}\wedge\epsilon_2\;\in\;{\mathtt{E}_\mathrm{s}})\rightarrow
 \ldots, \\
 (\epsilon_1\;\in\;\mathtt{F}\wedge\epsilon_2\;\in\;\mathtt{F})\rightarrow \\
 \text{}\mathit{send}\,
@@ -1057,7 +1065,7 @@ $$
 \mathit{valueslist}          :  \mathtt{E} \to \mathtt{K} \to \mathtt{C} \\
 \mathit{valueslist} = \\
 \text{}\lambda\epsilon\kappa\;.\;
-   \epsilon\;\in\;\text{\texttt{E}\textrm{p}}\rightarrow \\
+   \epsilon\;\in\;{\mathtt{E}_\mathrm{p}}\rightarrow \\
 \text{}\mathit{cdr-internal}\;
          \epsilon \\
 (\lambda{\epsilon}^{*}\;.\;

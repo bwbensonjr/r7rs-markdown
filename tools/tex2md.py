@@ -543,11 +543,14 @@ def _fix_text_spans(m):
     """
     out = []
     i = 0
+    pat = re.compile(r'\\text(?:tt|rm|it|bf|sf|sc)?\{')
     while i < len(m):
-        if m.startswith('\\text{', i):
-            j = i + len('\\text')          # index of '{'
+        mm = pat.match(m, i)
+        if mm:
+            cmd = mm.group(0)[:-1]          # e.g. \texttt   (font kept)
+            j = mm.end() - 1                # index of '{'
             close = match_brace(m, j)
-            out.append('\\text{' + _textmode(m[j + 1:close]) + '}')
+            out.append(cmd + '{' + _textmode(m[j + 1:close]) + '}')
             i = close + 1
         else:
             out.append(m[i])
@@ -1146,14 +1149,90 @@ def env_entry(first_rem, inner, ctx):
     return out
 
 
+def _textify(s):
+    """Reduce a natural-language run to text safe inside a math \\text{...}."""
+    s = re.sub(r'\{\\(?:cf|tt|it|rm|em|bf|sf|sl|sc)\s*([^{}]*)\}', r'\1', s)
+    s = re.sub(r'\\(?:it|rm|em|bf|sf|sl|sc|cf|tt)(?![A-Za-z])', '', s)
+    s = s.replace('``', '“').replace("''", '”')
+    s = s.replace('\\ ', ' ').replace('~', ' ')
+    s = re.sub(r'\\[,;:!]', ' ', s)
+    for name, ch in _GREEK.items():
+        s = re.sub(r'\\' + name + r'(?![A-Za-z])', ch, s)
+    s = s.replace('\\{', '\x01').replace('\\}', '\x02')  # protect literal braces
+    s = s.replace('{', '').replace('}', '')
+    s = s.replace('\x01', '\\{').replace('\x02', '\\}')
+    s = s.replace('\\#', '#').replace('#', '\\#')     # normalize then escape once
+    s = s.replace('&', '\\&').replace('%', '\\%')
+    s = re.sub(r'(?<!\\)[_^$]', '', s)
+    return re.sub(r'\s+', ' ', s).strip()
+
+
+def cell_to_math(tex, ctx):
+    """Convert a tabular cell (mixed prose/math) to a math-array cell.
+
+    Runs delimited by $...$ (or that are bare math macros) become math;
+    natural-language runs are wrapped in \\text{...}. Suitable for placing
+    inside a $$ \\begin{array} ... $$ block, where backslashes survive and
+    #, {, } are valid (unlike inside a Markdown table cell).
+    """
+    tex = tex.strip()
+    if not tex:
+        return ''
+    parts = re.split(r'(\$[^$]*\$)', tex)
+    out = []
+    for p in parts:
+        if not p:
+            continue
+        if p.startswith('$') and p.endswith('$') and len(p) >= 2:
+            out.append(normalize_math(p[1:-1]))
+        elif not re.search(r'[A-Za-z]{2,}', re.sub(r'\\[A-Za-z]+', '', p)):
+            # no natural-language words once \commands are removed -> math
+            # (e.g. \K, \elem, {\Gamma}, \LOC \times \LOC)
+            out.append(normalize_math(p))
+        else:
+            t = _textify(p)
+            if t:
+                # keep boundary spaces inside \text{} (math mode ignores them
+                # outside), so words don't fuse with adjacent math variables
+                lead = ' ' if re.match(r'\s', p) else ''
+                trail = ' ' if re.search(r'\s$', p) else ''
+                out.append('\\text{%s%s%s}' % (lead, t, trail))
+    return ''.join(x for x in out if x).strip()
+
+
 def env_tabular(first_rem, inner, ctx):
-    # column spec is in first_rem: {ll} etc.
-    m = re.match(r'\s*\{[^}]*\}', first_rem)
-    rows_src = first_rem[m.end():] if m else first_rem
+    # column spec is the first brace group in first_rem, e.g. {r@{ }c@{\qquad}l}
+    # (may itself contain nested braces, so match rather than regex to '}').
+    s = first_rem.lstrip()
+    if s.startswith('{'):
+        rows_src = s[match_brace(s, 0) + 1:]
+    else:
+        rows_src = first_rem
     text = rows_src + '\n' + '\n'.join(inner)
     # split rows on \\
     text = re.sub(r'\\hline', '', text)
     rows = re.split(r'\\\\', text)
+
+    if ctx.get('math_tabular'):
+        # render as a $$ \begin{array} ... $$ block (math, not a Markdown table)
+        arr = []
+        ncol = 0
+        for r in rows:
+            r = r.strip()
+            if r == '':
+                continue
+            r = re.sub(r'\\multicolumn\{\d+\}\{[^}]*\}\{', '{', r)
+            cells = [cell_to_math(c, ctx) for c in _split_cells(r)]
+            arr.append(cells)
+            ncol = max(ncol, len(cells))
+        if not arr:
+            return ['']
+        colspec = 'l' * max(ncol, 1)
+        body = ['%s \\\\' % ' & '.join(row + [''] * (ncol - len(row)))
+                for row in arr]
+        return ['', '$$', '\\begin{array}{%s}' % colspec] + body + \
+               ['\\end{array}', '$$', '']
+
     table = []
     ncol = 0
     for r in rows:
@@ -1370,7 +1449,38 @@ def preprocess(text):
     macros = collect_newcommands(text)
     text = remove_definitions(text)
     text = expand_macros(text, macros)
+    # Some macros expand to \hbox{$...$}/\makebox{...} containing *nested* $,
+    # which breaks $-based math parsing downstream. Flatten those boxes into
+    # plain math groups with the inner $ removed.
+    text = re.sub(r'\\makebox(?:\s*\[[^\]]*\])*', r'\\mbox', text)
+    text = _flatten_math_boxes(text)
     return text
+
+
+def _flatten_math_boxes(s):
+    """Flatten \\hbox{...}/\\mbox{...} that (after expansion) contain nested $.
+
+    Recurses innermost-first so that a nested \\hbox{$\\Gamma$} is turned into a
+    math group {\\Gamma} *before* an enclosing box strips its own $ — otherwise
+    a blanket $-removal on the outer box would corrupt the inner one.
+    """
+    out = []
+    i = 0
+    while i < len(s):
+        mm = re.match(r'\\(hbox|mbox)\{', s[i:])
+        if mm:
+            b = i + mm.end() - 1
+            close = match_brace(s, b)
+            inner = _flatten_math_boxes(s[b + 1:close])
+            if '$' in inner:
+                out.append('{' + inner.replace('$', '') + '}')
+            else:
+                out.append('\\' + mm.group(1) + '{' + inner + '}')
+            i = close + 1
+            continue
+        out.append(s[i])
+        i += 1
+    return ''.join(out)
 
 
 # --------------------------------------------------------------------------
@@ -1496,6 +1606,9 @@ def convert_group_file(spec_dir, outbase, files, labels, citefile, mode, outfile
             'labels': labels, 'mode': mode, 'outfile': outfile_for_ctx,
             'citefile': citefile, 'promote': promote,
             'emitted_anchors': set(), 'unresolved': set(),
+            # the formal-semantics tables are math, not data: render them as
+            # $$ \begin{array} $$ so backslashes/#/{} survive GitHub rendering
+            'math_tabular': fname == 'sem.tex',
         }
         lines = text.split('\n')
         md = convert_blocks(lines, ctx)
