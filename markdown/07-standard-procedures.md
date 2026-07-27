@@ -872,7 +872,7 @@ number-theoretic (integer) division. It is an error if *n*₂ is zero.
 The procedures ending in `/` return two integers; the other
 procedures return an integer. All the procedures compute a
 quotient *n_q* and remainder *n_r* such that
-$n_{1} = n_{2} n_q + n_r$. For each of the
+${n_{1}} = {n_{2}} {n_q} + {n_r}$. For each of the
 division operators, there are three procedures defined as follows:
 
 ```scheme
@@ -882,12 +882,12 @@ division operators, there are three procedures defined as follows:
 ```
 
 The remainder *n_r* is determined by the choice of integer
-*n_q*: $n_r = n_{1} - n_{2} n_q$. Each set of
+*n_q*: ${n_r} = {n_{1}} - {n_{2}} {n_q}$. Each set of
 operators uses a different choice of *n_q*:
 
-| `floor` | $n_q = \lfloorn_{1} / n_{2}\rfloor$ |
+| `floor` | ${n_q} = \lfloor{n_{1}} / {n_{2}}\rfloor$ |
 | --- | --- |
-| `truncate` | $n_q = \text{truncate}(n_{1} / n_{2})$ |
+| `truncate` | ${n_q} = \text{truncate}({n_{1}} / {n_{2}})$ |
 
 For any of the operators, and for integers *n*₁ and *n*₂
 with *n*₂ not equal to 0,
@@ -1132,7 +1132,7 @@ part.
 **`(exact-integer-sqrt k)`** — procedure
 
 Returns two non-negative exact integers $s$ and $r$ where
-$k = s^2 + r$ and $k < (s+1)^2$.
+${k} = s^2 + r$ and ${k} < (s+1)^2$.
 
 ```scheme
 (exact-integer-sqrt 4)   => 2 0
@@ -1169,8 +1169,8 @@ Let *x*₁, *x*₂, *x*₃, and *x*₄ be
 real numbers and *z* be a complex number such that
 
 $$
-z = x_{1} + x_{2}i
- = x_{3} \cdot e^{i x_4}
+{z} = {x_{1}} + {x_{2}}i
+ = {x_{3}} \cdot e^{i x_4}
 $$
 
 Then all of
@@ -1184,7 +1184,7 @@ Then all of
 (angle z)                        => $x_angle$
 ```
 
-are true, where $-\pi \le x_{angle} \le \pi$ with $x_{angle} = x_{4} + 2\pi n$
+are true, where $-\pi \le x_{angle} \le \pi$ with $x_{angle} = {x_{4}} + 2\pi n$
 for some integer $n$.
 
 The `make-polar` procedure may return an inexact complex number even if its
@@ -1970,7 +1970,7 @@ Here are some additional examples:
 | `#\iota` | ; $\iota$ (if character and name are supported) |
 
 Case is significant in #\⟨character⟩, and in
-#\$\langle$character name$\rangle$,
+#\$⟨$character name$⟩$,
 but not in `#\x`⟨hex scalar value⟩.
 If ⟨character⟩ in
 #\⟨character⟩ is alphabetic, then any character

@@ -450,13 +450,16 @@ def family_subs(text, mode):
             if name in VAR_FAMILY:
                 key = VAR_FAMILY[name]
                 if mode == 'math':
-                    rep = arg + ('_{%s}' % key if key else '')
+                    # wrap in braces so a preceding control word (e.g. \lfloor)
+                    # cannot fuse with the leading letter of the replacement
+                    rep = '{%s%s}' % (arg, '_{%s}' % key if key else '')
                 else:
                     rep = arg + SUB.get(key, '')
             else:
                 key = HYP_FAMILY[name]
                 if mode == 'math':
-                    rep = '\\langle %s \\rangle' % arg + ('_{%s}' % key if key else '')
+                    rep = '{\\langle %s \\rangle%s}' % (
+                        arg, '_{%s}' % key if key else '')
                 else:
                     rep = '⟨%s⟩%s' % (arg, SUB.get(key, ''))
             text = text[:m.start()] + rep + text[m.end():]
@@ -530,11 +533,53 @@ def _math_fonts(m):
     return m
 
 
+def _fix_text_spans(m):
+    """Make the interior of every \\text{...} span text-mode-safe.
+
+    MathJax rejects math-mode constructs (\\mathrm, ^, _, greek, \\langle)
+    inside \\text{}. The report's formal semantics embeds object-language code
+    with metavariables that way, so rewrite each \\text{} interior to text-mode
+    equivalents (\\mathrm->\\textrm, drop sub/superscript operators, etc.).
+    """
+    out = []
+    i = 0
+    while i < len(m):
+        if m.startswith('\\text{', i):
+            j = i + len('\\text')          # index of '{'
+            close = match_brace(m, j)
+            out.append('\\text{' + _textmode(m[j + 1:close]) + '}')
+            i = close + 1
+        else:
+            out.append(m[i])
+            i += 1
+    return ''.join(out)
+
+
+def _textmode(s):
+    s = (s.replace('\\mathrm', '\\textrm').replace('\\mathtt', '\\texttt')
+          .replace('\\mathit', '\\textit').replace('\\mathbf', '\\textbf')
+          .replace('\\mathsf', '\\textsf'))
+    s = re.sub(r'\\mathcal\{([^{}]*)\}', r'\1', s)
+    # drop bold inside text spans: bold-typewriter has no font metrics and the
+    # weight only marked emphasis in the typeset original
+    s = re.sub(r'\\textbf\{([^{}]*)\}', r'\1', s)
+    for name, ch in _GREEK.items():
+        s = re.sub(r'\\' + name + r'(?![A-Za-z])', ch, s)
+    s = s.replace('\\langle', '⟨').replace('\\rangle', '⟩')
+    s = s.replace('\\dots', '…').replace('\\ldots', '…')
+    s = re.sub(r'\\[;,:!]', ' ', s)
+    # sub/superscript operators are illegal in text mode; keep the operand
+    s = re.sub(r'(?<!\\)[\^_]', '', s)
+    return s
+
+
 def normalize_math(m):
     """Best-effort conversion of the report's TeX-in-math to MathJax-safe TeX."""
     m = family_subs(m, 'math')
     m = m.replace('[\\![', '⟦').replace(']\\!]', '⟧')
     m = m.replace('\\sembrack', '')
+    m = re.sub(r'\\ide\{([^{}]*)\}', r'\\texttt{\1}', m)   # \ide{x} -> code
+    m = m.replace('\\langle', '⟨').replace('\\rangle', '⟩')
     m = re.sub(r'(\\[A-Za-z]+)\{\}', r'\1 ', m)   # \tt{}L -> \tt L (keep sep)
     m = m.replace('{}', '')                        # any remaining empty groups
     # apply the *-repetition before font conversion so that \arbno{...}'s
@@ -545,6 +590,7 @@ def normalize_math(m):
     m = re.sub(r'\\cal\s+([A-Za-z])', r'\\mathcal{\1}', m)
     m = re.sub(r'\\(?:cf|tt|rm|it|em|sf|bf|sl|sc)(?![A-Za-z])', '', m)
     m = m.replace('\\elem', '\\in').replace('\\elt', '\\downarrow')
+    m = re.sub(r'\\S(?![A-Za-z])', '§', m)   # sequence-concatenation operator
     m = m.replace('\\backwhack', '\\backslash')
     m = m.replace('\\:', '\\;')
     m = re.sub(r'\\hfill|\\hfil|\\wd0|\\kill|\\frenchspacing', '', m)
@@ -552,6 +598,7 @@ def normalize_math(m):
     m = m.replace('``', '\\text{“}').replace("''", '\\text{”}')
     m = m.replace('\\cf ', '').replace('\\tt ', '')
     m = m.replace('$', '')  # drop any stray nested math delimiters
+    m = _fix_text_spans(m)  # make \text{} interiors text-mode-safe (last)
     return m
 
 

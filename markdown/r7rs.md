@@ -4318,7 +4318,7 @@ number-theoretic (integer) division. It is an error if *n*₂ is zero.
 The procedures ending in `/` return two integers; the other
 procedures return an integer. All the procedures compute a
 quotient *n_q* and remainder *n_r* such that
-$n_{1} = n_{2} n_q + n_r$. For each of the
+${n_{1}} = {n_{2}} {n_q} + {n_r}$. For each of the
 division operators, there are three procedures defined as follows:
 
 ```scheme
@@ -4328,12 +4328,12 @@ division operators, there are three procedures defined as follows:
 ```
 
 The remainder *n_r* is determined by the choice of integer
-*n_q*: $n_r = n_{1} - n_{2} n_q$. Each set of
+*n_q*: ${n_r} = {n_{1}} - {n_{2}} {n_q}$. Each set of
 operators uses a different choice of *n_q*:
 
-| `floor` | $n_q = \lfloorn_{1} / n_{2}\rfloor$ |
+| `floor` | ${n_q} = \lfloor{n_{1}} / {n_{2}}\rfloor$ |
 | --- | --- |
-| `truncate` | $n_q = \text{truncate}(n_{1} / n_{2})$ |
+| `truncate` | ${n_q} = \text{truncate}({n_{1}} / {n_{2}})$ |
 
 For any of the operators, and for integers *n*₁ and *n*₂
 with *n*₂ not equal to 0,
@@ -4578,7 +4578,7 @@ part.
 **`(exact-integer-sqrt k)`** — procedure
 
 Returns two non-negative exact integers $s$ and $r$ where
-$k = s^2 + r$ and $k < (s+1)^2$.
+${k} = s^2 + r$ and ${k} < (s+1)^2$.
 
 ```scheme
 (exact-integer-sqrt 4)   => 2 0
@@ -4615,8 +4615,8 @@ Let *x*₁, *x*₂, *x*₃, and *x*₄ be
 real numbers and *z* be a complex number such that
 
 $$
-z = x_{1} + x_{2}i
- = x_{3} \cdot e^{i x_4}
+{z} = {x_{1}} + {x_{2}}i
+ = {x_{3}} \cdot e^{i x_4}
 $$
 
 Then all of
@@ -4630,7 +4630,7 @@ Then all of
 (angle z)                        => $x_angle$
 ```
 
-are true, where $-\pi \le x_{angle} \le \pi$ with $x_{angle} = x_{4} + 2\pi n$
+are true, where $-\pi \le x_{angle} \le \pi$ with $x_{angle} = {x_{4}} + 2\pi n$
 for some integer $n$.
 
 The `make-polar` procedure may return an inexact complex number even if its
@@ -5416,7 +5416,7 @@ Here are some additional examples:
 | `#\iota` | ; $\iota$ (if character and name are supported) |
 
 Case is significant in #\⟨character⟩, and in
-#\$\langle$character name$\rangle$,
+#\$⟨$character name$⟩$,
 but not in `#\x`⟨hex scalar value⟩.
 If ⟨character⟩ in
 #\⟨character⟩ is alphabetic, then any character
@@ -7610,7 +7610,7 @@ but a ⟨delimiter⟩ or the end of file.
 <a id="extendedalphas"></a>
 <a id="identifiersyntax"></a>
 
-0⟨identifier⟩ $\langle$
+0⟨identifier⟩ $⟨$
 
 Note that `+i`, `-i` and ⟨infnan⟩ below are exceptions to the
 ⟨peculiar identifier⟩ rule; they are parsed as numbers, not
@@ -7995,11 +7995,11 @@ and notation used here are described in [[Stoy77](#cite-stoy77)]; the definition
 `dynamic-wind` is taken from [[GasbichlerKnauelSperberKelsey2003](#cite-gasbichlerknauelsperberkelsey2003)].
 The notation is summarized below:
 
-| $\langle\,\dots\,\rangle$ | sequence formation |
+| $⟨\,\dots\,⟩$ | sequence formation |
 | --- | --- |
 | $s \downarrow k$ | $k$th member of the sequence $s$ (1-based) |
 | $\#s$ | length of sequence $s$ |
-| $s \;\S\; t$ | concatenation of sequences $s$ and $t$ |
+| $s \;§\; t$ | concatenation of sequences $s$ and $t$ |
 | $s \dagger k$ | drop the first $k$ members of sequence $s$ |
 | $t \rightarrow a, b$ | McCarthy conditional “if $t$ then $a$ else $b$” |
 | $\rho[x/i]$ | substitution “$\rho$ with $x$ for $i$” |
@@ -8031,8 +8031,8 @@ If P is a program in which all variables are defined before being
 referenced or assigned, then the meaning of P is
 
 $$
-\mathcal{E}⟦\text{\texttt{((lambda ({\mathrm{I}}^{*}) \mathrm{P}')
-\langle undefined \rangle \dotsfoo)}}⟧
+\mathcal{E}⟦\text{\texttt{((lambda ({\textrm{I}}{*}) \textrm{P}')
+{⟨ undefined ⟩} …foo)}}⟧
 $$
 
 where I is the sequence of variables defined in P, $\mathrm{P}'$
@@ -8081,7 +8081,7 @@ $\alpha$   & ∈ & `L` & &          & locations |  |  |  |  |  |
                                 null, undefined, unspecified$\}$ |  |
 |  |  |  |  |  | miscellaneous |
 | $\phi$ | ∈ | `F` | = | $\mathtt{L}\times({\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C})$ | procedure values |
-| $\epsilon$ | ∈ | `E` | = | [0pt][l]$\mathtt{Q}+\mathtt{H}+\mathtt{R}+\text{\mathtt{E}_\mathrm{p}}+\text{\mathtt{E}_\mathrm{v}}+\text{\mathtt{E}_\mathrm{s}}+\mathtt{M}+\mathtt{F}$ |  |
+| $\epsilon$ | ∈ | `E` | = | [0pt][l]$\mathtt{Q}+\mathtt{H}+\mathtt{R}+\text{\texttt{E}\textrm{p}}+\text{\texttt{E}\textrm{v}}+\text{\texttt{E}\textrm{s}}+\mathtt{M}+\mathtt{F}$ |  |
 |  |  |  |  |  | expressed values |
 | $\sigma$ | ∈ | `S` | = | $\mathtt{L}\to(\mathtt{E}\times\mathtt{T})$ | stores |
 | $\rho$ | ∈ | `U` | = | $\mathrm{Ide}\to\mathtt{L}$ | environments |
@@ -8119,9 +8119,9 @@ $$
 
 $$
 \begin{aligned}
-\mathcal{E}⟦\text{\texttt{(\mathrm{E}_0 {\mathrm{E}}^{*})}}⟧ = \\
+\mathcal{E}⟦\text{\texttt{(\textrm{E}0 {\textrm{E}}{*})}}⟧ = \\
 \text{}\lambda\rho\omega\kappa\;.\;\mathcal{E}^{*}
-    (\mathit{permute}(\langle\mathrm{E}_0\rangle\;\S\;{\mathrm{E}}^{*})) \\
+    (\mathit{permute}(⟨\mathrm{E}_0⟩\;§\;{\mathrm{E}}^{*})) \\
 \rho\; \\
 \omega\; \\
 (\lambda{\epsilon}^{*}\;.\;
@@ -8135,11 +8135,11 @@ $$
 
 $$
 \begin{aligned}
-\mathcal{E}⟦\text{\texttt{(\ide{lambda} ({\mathrm{I}}^{*}) {\Gamma}^{*} \mathrm{E}_0)}}⟧ = \\
+\mathcal{E}⟦\text{\texttt{(\texttt{lambda} ({\textrm{I}}{*}) {Γ}{*} \textrm{E}0)}}⟧ = \\
 \text{}\lambda\rho\omega\kappa\;.\;\lambda\sigma\;.\; \\
 \text{}\mathit{new}\;\sigma\;\in\;\mathtt{L}\rightarrow \\
 \text{}\mathit{send}\;
-     (\langle
+     (⟨
          \mathit{new}\;\sigma\,\vert\,\mathtt{L}, \\
 \lambda{\epsilon}^{*}\omega^\prime\kappa^\prime\;.\;
                \#{\epsilon}^{*} = \#{{\mathrm{I}}^{*}}\rightarrow \\
@@ -8149,7 +8149,7 @@ $$
                               (\mathcal{E}⟦\mathrm{E}_0⟧\rho^\prime\omega^\prime\kappa^\prime)) \\
 (\mathit{extends}\;\rho\;{{\mathrm{I}}^{*}}\;{\alpha}^{*})) \\
 {\epsilon}^{*}, \\
-\text{}\mathit{wrong }\mathrm{\text{“}wrong number of arguments\text{”}}\rangle \\
+\text{}\mathit{wrong }\mathrm{\text{“}wrong number of arguments\text{”}}⟩ \\
 \mathrm{in }\mathtt{E}) \\
 \kappa \\
 (\mathit{update}\;(\mathit{new}\;\sigma\,\vert\,\mathtt{L})
@@ -8161,11 +8161,11 @@ $$
 
 $$
 \begin{aligned}
-\mathcal{E}⟦\text{\texttt{(lambda ({\mathrm{I}}^{*} \mathbf{.}\ \mathrm{I}) {\Gamma}^{*} \mathrm{E}_0)}}⟧ = \\
+\mathcal{E}⟦\text{\texttt{(lambda ({\textrm{I}}{*} .\ \textrm{I}) {Γ}{*} \textrm{E}0)}}⟧ = \\
 \text{}\lambda\rho\omega\kappa\;.\;\lambda\sigma\;.\; \\
 \text{}\mathit{new}\;\sigma\;\in\;\mathtt{L}\rightarrow \\
 \text{}\mathit{send}\;
-     (\langle
+     (⟨
          \mathit{new}\;\sigma\,\vert\,\mathtt{L}, \\
 \lambda{\epsilon}^{*}\omega^\prime\kappa^\prime\;.\;
                \#{\epsilon}^{*} \geq \#{\mathrm{I}}^{*}\rightarrow \\
@@ -8174,11 +8174,11 @@ $$
                            (\lambda\rho^\prime\;.\;\mathcal{C}⟦{\Gamma}^{*}⟧\rho^\prime\omega^\prime
                                (\mathcal{E}⟦\mathrm{E}_0⟧\rho^\prime\omega^\prime\kappa^\prime)) \\
 (\mathit{extends}\;\rho
-                               \;({\mathrm{I}}^{*}\;\S\;\langle\mathrm{I}\rangle)
+                               \;({\mathrm{I}}^{*}\;§\;⟨\mathrm{I}⟩)
                                \;{\alpha}^{*})) \\
 {\epsilon}^{*} \\
 (\#{\mathrm{I}}^{*}), \\
-\text{}\mathit{wrong }\mathrm{\text{“}too few arguments\text{”}}\rangle\mathrm{in }\mathtt{E}) \\
+\text{}\mathit{wrong }\mathrm{\text{“}too few arguments\text{”}}⟩\mathrm{in }\mathtt{E}) \\
 \kappa \\
 (\mathit{update}\;(\mathit{new}\;\sigma\,\vert\,\mathtt{L})
                            \;\mathit{unspecified}
@@ -8187,12 +8187,12 @@ $$
 \end{aligned}
 $$
 
-$$\mathcal{E}⟦\text{\texttt{(lambda \mathrm{I} {\Gamma}^{*} \mathrm{E}_0)}}⟧ =
- \mathcal{E}⟦\text{\texttt{(lambda (\mathbf{.}\ \mathrm{I}) {\Gamma}^{*} \mathrm{E}_0)}}⟧$$
+$$\mathcal{E}⟦\text{\texttt{(lambda \textrm{I} {Γ}{*} \textrm{E}0)}}⟧ =
+ \mathcal{E}⟦\text{\texttt{(lambda (.\ \textrm{I}) {Γ}{*} \textrm{E}0)}}⟧$$
 
 $$
 \begin{aligned}
-\mathcal{E}⟦\text{\texttt{(\ide{if} \mathrm{E}_0 \mathrm{E}_1 \mathrm{E}_2)}}⟧ = \\
+\mathcal{E}⟦\text{\texttt{(\texttt{if} \textrm{E}0 \textrm{E}1 \textrm{E}2)}}⟧ = \\
 \text{}\lambda\rho\omega\kappa\;.\;
    \mathcal{E}⟦\mathrm{E}_0⟧\;\rho\omega\;(\mathit{single}\;(\lambda\epsilon\;.\;
     \mathit{truish}\;\epsilon\rightarrow\mathcal{E}⟦\mathrm{E}_1⟧\rho\omega\kappa, \\
@@ -8202,7 +8202,7 @@ $$
 
 $$
 \begin{aligned}
-\mathcal{E}⟦\text{\texttt{(if \mathrm{E}_0 \mathrm{E}_1)}}⟧ = \\
+\mathcal{E}⟦\text{\texttt{(if \textrm{E}0 \textrm{E}1)}}⟧ = \\
 \text{}\lambda\rho\omega\kappa\;.\;
    \mathcal{E}⟦\mathrm{E}_0⟧\;\rho\omega\;(\mathit{single}\;(\lambda\epsilon\;.\;
     \mathit{truish}\;\epsilon\rightarrow\mathcal{E}⟦\mathrm{E}_1⟧\rho\omega\kappa, \\
@@ -8215,7 +8215,7 @@ be used in place of *unspecified*.
 
 $$
 \begin{aligned}
-\mathcal{E}⟦\text{\texttt{(\ide{set!} \mathrm{I} \mathrm{E})}}⟧ = \\
+\mathcal{E}⟦\text{\texttt{(\texttt{set!} \textrm{I} \textrm{E})}}⟧ = \\
 \text{}\lambda\rho\omega\kappa\;.\;\mathcal{E}⟦\mathrm{E}⟧\;\rho\;\omega\;
      (\mathit{single}(\lambda\epsilon\;.\;\mathit{assign}\;
        (\mathit{lookup}\;\rho\;\mathrm{I}) \\
@@ -8225,7 +8225,7 @@ $$
 $$
 
 $$\mathcal{E}^{*}⟦\;⟧ =
-  \lambda\rho\omega\kappa\;.\;\kappa\langle\;\rangle$$
+  \lambda\rho\omega\kappa\;.\;\kappa⟨\;⟩$$
 
 $$
 \begin{aligned}
@@ -8235,7 +8235,7 @@ $$
          (\mathit{single}
             (\lambda\epsilon_0\;.\;\mathcal{E}^{*}⟦{\mathrm{E}}^{*}⟧
                 \;\rho\omega\;(\lambda{\epsilon}^{*}\;.\;
-                           \kappa\;(\langle\epsilon_0\rangle\;\S\;{\epsilon}^{*}))))
+                           \kappa\;(⟨\epsilon_0⟩\;§\;{\epsilon}^{*}))))
 \end{aligned}
 $$
 
@@ -8276,7 +8276,7 @@ $$
 \mathit{send}          :  \mathtt{E} \to \mathtt{K} \to \mathtt{C} \\
 
 \mathit{send} =
- \lambda\epsilon\kappa\;.\;\kappa\langle\epsilon\rangle
+ \lambda\epsilon\kappa\;.\;\kappa⟨\epsilon⟩
 \end{aligned}
 $$
 
@@ -8317,7 +8317,7 @@ $$
 \mathit{update}        :  \mathtt{L} \to \mathtt{E} \to \mathtt{S} \to \mathtt{S} \\
 
 \mathit{update} =
- \lambda\alpha\epsilon\sigma\;.\;\sigma[\langle\epsilon,\mathit{true}\rangle/\alpha]
+ \lambda\alpha\epsilon\sigma\;.\;\sigma[⟨\epsilon,\mathit{true}⟩/\alpha]
 \end{aligned}
 $$
 
@@ -8327,10 +8327,10 @@ $$
 
 \mathit{tievals} = \\
 \text{}\lambda\psi{\epsilon}^{*}\sigma\;.\;
-   \#{\epsilon}^{*}=0\rightarrow\psi\langle\;\rangle\sigma, \\
+   \#{\epsilon}^{*}=0\rightarrow\psi⟨\;⟩\sigma, \\
 \mathit{new}\;\sigma\;\in\;\mathtt{L}\rightarrow\mathit{tievals}\,
-       (\lambda{\alpha}^{*}\;.\;\psi(\langle\mathit{new}\;\sigma\;\vert\;\mathtt{L}\rangle
-                                     \;\S\;{\alpha}^{*})) \\
+       (\lambda{\alpha}^{*}\;.\;\psi(⟨\mathit{new}\;\sigma\;\vert\;\mathtt{L}⟩
+                                     \;§\;{\alpha}^{*})) \\
 ({\epsilon}^{*}\dagger 1) \\
 (\mathit{update}(\mathit{new}\;\sigma\;\vert\;\mathtt{L})
                                  ({\epsilon}^{*}\downarrow 1)
@@ -8347,7 +8347,7 @@ $$
 \text{}\lambda\psi{\epsilon}^{*}\nu\;.\;\mathit{list}\;
    (\mathit{dropfirst}\;{\epsilon}^{*}\nu) \\
 (\mathit{single}(\lambda\epsilon\;.\;\mathit{tievals}\;\psi\;
-           ((\mathit{takefirst}\;{\epsilon}^{*}\nu)\;\S\;\langle\epsilon\rangle)))
+           ((\mathit{takefirst}\;{\epsilon}^{*}\nu)\;§\;⟨\epsilon⟩)))
 \end{aligned}
 $$
 
@@ -8355,8 +8355,8 @@ $$\mathit{dropfirst} =
  \lambda l n \;.\;  n=0 \rightarrow l, \mathit{dropfirst}\,(l \dagger 1)(n - 1)$$
 
 $$\mathit{takefirst} =
- \lambda l n \;.\; n=0 \rightarrow \langle\;\rangle,
-     \langle l \downarrow 1\rangle\;\S\;(\mathit{takefirst}\,(l \dagger 1)(n - 1))$$
+ \lambda l n \;.\; n=0 \rightarrow ⟨\;⟩,
+     ⟨ l \downarrow 1⟩\;§\;(\mathit{takefirst}\,(l \dagger 1)(n - 1))$$
 
 $$
 \begin{aligned}
@@ -8375,7 +8375,7 @@ $$\mathit{permute}       :  {\mathrm{Exp}}^{*} \to {\mathrm{Exp}}^{*}
     \text{\qquad [implementation-dependent]}$$
 
 $$\mathit{unpermute}     :  {\mathtt{E}}^{*} \to {\mathtt{E}}^{*}
-    \text{\qquad [inverse of \mathit{permute}]}$$
+    \text{\qquad [inverse of \textit{permute}]}$$
 
 $$
 \begin{aligned}
@@ -8430,7 +8430,7 @@ $$
    \#{\epsilon}^{*}=0\rightarrow\mathit{send}\;\mathit{null}\;\kappa, \\
 \text{}\mathit{list}\,({\epsilon}^{*}\dagger 1)
              (\mathit{single}(\lambda\epsilon\;.\;
-                   \mathit{cons}\langle{\epsilon}^{*}\downarrow 1,\epsilon\rangle\kappa))
+                   \mathit{cons}⟨{\epsilon}^{*}\downarrow 1,\epsilon⟩\kappa))
 \end{aligned}
 $$
 
@@ -8444,9 +8444,9 @@ $$
 (\lambda\sigma^\prime\;.\;
            \mathit{new}\;\sigma^\prime\;\in\;\mathtt{L}\rightarrow \\
 \text{}\mathit{send}\,
-               (\langle\mathit{new}\;\sigma\;\vert\;\mathtt{L},
+               (⟨\mathit{new}\;\sigma\;\vert\;\mathtt{L},
                                             \mathit{new}\;\sigma^\prime\;\vert\;\mathtt{L},
-         \mathit{true}\rangle \\
+         \mathit{true}⟩ \\
 \mathrm{in }\mathtt{E}) \\
 \kappa \\
 (\mathit{update}(\mathit{new}\;\sigma^\prime\;\vert\;\mathtt{L})
@@ -8494,7 +8494,7 @@ $$
 
 \mathit{car} = \\
 \text{}\mathit{onearg}\,(\lambda\epsilon\omega\kappa\;.\;
-   \epsilon\;\in\;\text{\mathtt{E}_\mathrm{p}}\rightarrow
+   \epsilon\;\in\;\text{\texttt{E}\textrm{p}}\rightarrow
           \mathit{car-internal}\;\epsilon\kappa, \\
 \text{}\mathit{wrong }\mathrm{\text{“}non-pair argument to { car}\text{”}})
 \end{aligned}
@@ -8506,15 +8506,15 @@ $$
 
 \mathit{car-internal} =
  \text{}\lambda\epsilon\omega\kappa\;.\;
-   \mathit{hold}\, (\epsilon\;\vert\;\text{\mathtt{E}_\mathrm{p}}\downarrow 1) \kappa
+   \mathit{hold}\, (\epsilon\;\vert\;\text{\texttt{E}\textrm{p}}\downarrow 1) \kappa
 \end{aligned}
 $$
 
 $$\mathit{cdr}          :  {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C} 
-\text{\qquad [similar to \mathit{car}]}$$
+\text{\qquad [similar to \textit{car}]}$$
 
 $$\mathit{cdr-internal} :  \mathtt{E} \to \mathtt{K} \to \mathtt{C} 
-\text{\qquad [similar to \mathit{car-internal}]}$$
+\text{\qquad [similar to \textit{car-internal}]}$$
 
 $$
 \begin{aligned}
@@ -8522,9 +8522,9 @@ $$
 
 \mathit{setcar} = \\
 \text{}\mathit{twoarg}\,(\lambda\epsilon_1\epsilon_2\omega\kappa\;.\;
-   \epsilon_1\;\in\;\text{\mathtt{E}_\mathrm{p}}\rightarrow \\
-(\epsilon_1\;\vert\;\text{\mathtt{E}_\mathrm{p}}\downarrow 3)\rightarrow
-          \mathit{assign}\,(\epsilon_1\;\vert\;\text{\mathtt{E}_\mathrm{p}}\downarrow 1) \\
+   \epsilon_1\;\in\;\text{\texttt{E}\textrm{p}}\rightarrow \\
+(\epsilon_1\;\vert\;\text{\texttt{E}\textrm{p}}\downarrow 3)\rightarrow
+          \mathit{assign}\,(\epsilon_1\;\vert\;\text{\texttt{E}\textrm{p}}\downarrow 1) \\
 \epsilon_2 \\
 (\mathit{send}\;\mathit{unspecified}\;\kappa), \\
 \mathit{wrong }\mathrm{\text{“}immutable argument to { set-car!}\text{”}}, \\
@@ -8554,20 +8554,20 @@ $$
 \text{}\mathit{send}\,
        (\epsilon_1\;\vert\;\mathtt{R}=\epsilon_2\;\vert\;\mathtt{R}\rightarrow\mathit{true},
             \mathit{false})\kappa, \\
-(\epsilon_1\;\in\;\text{\mathtt{E}_\mathrm{p}}\wedge\epsilon_2\;\in\;\text{\mathtt{E}_\mathrm{p}})\rightarrow \\
+(\epsilon_1\;\in\;\text{\texttt{E}\textrm{p}}\wedge\epsilon_2\;\in\;\text{\texttt{E}\textrm{p}})\rightarrow \\
 \text{}\mathit{send}\,
        ((\lambda{p_1}{p_2}\;.\;
                 (({p_1}\downarrow 1) = ({p_2}\downarrow 1)\wedge \\
 ({p_1}\downarrow 2) = ({p_2}\downarrow 2))
                      \rightarrow\mathit{true}, \\
 \text{}\mathit{false}) \\
-(\epsilon_1\;\vert\;\text{\mathtt{E}_\mathrm{p}}) \\
-(\epsilon_2\;\vert\;\text{\mathtt{E}_\mathrm{p}})) \\
+(\epsilon_1\;\vert\;\text{\texttt{E}\textrm{p}}) \\
+(\epsilon_2\;\vert\;\text{\texttt{E}\textrm{p}})) \\
 \kappa, \\
-(\epsilon_1\;\in\;\text{\mathtt{E}_\mathrm{v}}\wedge\epsilon_2\;\in\;\text{\mathtt{E}_\mathrm{v}})\rightarrow
+(\epsilon_1\;\in\;\text{\texttt{E}\textrm{v}}\wedge\epsilon_2\;\in\;\text{\texttt{E}\textrm{v}})\rightarrow
 
 \ldots, \\
-(\epsilon_1\;\in\;\text{\mathtt{E}_\mathrm{s}}\wedge\epsilon_2\;\in\;\text{\mathtt{E}_\mathrm{s}})\rightarrow
+(\epsilon_1\;\in\;\text{\texttt{E}\textrm{s}}\wedge\epsilon_2\;\in\;\text{\texttt{E}\textrm{s}})\rightarrow
 
 \ldots, \\
 (\epsilon_1\;\in\;\mathtt{F}\wedge\epsilon_2\;\in\;\mathtt{F})\rightarrow \\
@@ -8599,7 +8599,7 @@ $$
 
 \mathit{valueslist} = \\
 \text{}\lambda\epsilon\kappa\;.\;
-   \epsilon\;\in\;\text{\mathtt{E}_\mathrm{p}}\rightarrow \\
+   \epsilon\;\in\;\text{\texttt{E}\textrm{p}}\rightarrow \\
 \text{}\mathit{cdr-internal}\;
          \epsilon \\
 (\lambda{\epsilon}^{*}\;.\;
@@ -8608,8 +8608,8 @@ $$
 (\lambda{\epsilon}^{*}\;.\;\mathit{car-internal} \\
 \;\epsilon \\
  (\mathit{single}(\lambda\epsilon\;.\;
-              \kappa(\langle\epsilon\rangle\;\S\;{\epsilon}^{*}))))), \\
-\epsilon = \mathit{null}\rightarrow\kappa\langle\;\rangle, \\
+              \kappa(⟨\epsilon⟩\;§\;{\epsilon}^{*}))))), \\
+\epsilon = \mathit{null}\rightarrow\kappa⟨\;⟩, \\
 \text{}\mathit{wrong }\mathrm{\text{“}non-list argument to { values-list}\text{”}}
 \end{aligned}
 $$
@@ -8618,7 +8618,7 @@ $$
 \begin{aligned}
 \mathit{cwcc}          :  {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C} \\
 
-     \text{\qquad [\ide{call-with-current-continuation}]} \\
+     \text{\qquad [\texttt{call-with-current-continuation}]} \\
 
 \mathit{cwcc} = \\
 \text{}\mathit{onearg}\,(\lambda\epsilon\omega\kappa\;.\;
@@ -8627,10 +8627,10 @@ $$
        \mathit{new}\;\sigma\;\in\;\mathtt{L}\rightarrow \\
 \text{}\mathit{applicate}\;
            \epsilon \\
-\langle\langle\mathit{new}\;\sigma\;\vert\;\mathtt{L}, \\
+⟨⟨\mathit{new}\;\sigma\;\vert\;\mathtt{L}, \\
           \lambda{\epsilon}^{*}\omega^\prime\kappa^\prime\;.\;
-                             \mathit{travel}\;\omega^\prime\omega(\kappa{\epsilon}^{*})\rangle \\
-                      \mathrm{in }\mathtt{E}\rangle \\
+                             \mathit{travel}\;\omega^\prime\omega(\kappa{\epsilon}^{*})⟩ \\
+                      \mathrm{in }\mathtt{E}⟩ \\
 \omega \\
 \kappa \\
 (\mathit{update}\,
@@ -8648,7 +8648,7 @@ $$
 
 \mathit{travel} =  \\
 \text{}\lambda\omega_1\omega_2\;.\;
-  \mathit{travelpath}\;((\mathit{pathup}\;\omega_1(\mathit{commonancest}\;\omega_1\omega_2)) \;\S\; \\
+  \mathit{travelpath}\;((\mathit{pathup}\;\omega_1(\mathit{commonancest}\;\omega_1\omega_2)) \;§\; \\
  (\mathit{pathdown}\;(\mathit{commonancest}\;\omega_1\omega_2)\omega_2))
 \end{aligned}
 $$
@@ -8696,9 +8696,9 @@ $$
 
 \mathit{pathup} =  \\
 \text{}\lambda\omega_1\omega_2\;.\;
-  \omega_1=\omega_2\rightarrow\langle\rangle, \\
-\langle(\omega_1, \omega_1\;\vert\;(\mathtt{F} \times \mathtt{F} \times {P})\downarrow 2)\rangle
-  \;\S\; \\
+  \omega_1=\omega_2\rightarrow⟨⟩, \\
+⟨(\omega_1, \omega_1\;\vert\;(\mathtt{F} \times \mathtt{F} \times {P})\downarrow 2)⟩
+  \;§\; \\
 (\mathit{pathup}\;(\omega_1\;\vert\;(\mathtt{F} \times \mathtt{F} \times {P})\downarrow 3)\omega_2)
 \end{aligned}
 $$
@@ -8709,10 +8709,10 @@ $$
 
 \mathit{pathdown} =  \\
 \text{}\lambda\omega_1\omega_2\;.\;
-  \omega_1=\omega_2\rightarrow\langle\rangle, \\
+  \omega_1=\omega_2\rightarrow⟨⟩, \\
 (\mathit{pathdown}\;\omega_1(\omega_2\;\vert\;(\mathtt{F} \times \mathtt{F} \times {P})\downarrow 3))
-  \;\S\; \\
-\langle(\omega_2, \omega_2\;\vert\;(\mathtt{F} \times \mathtt{F} \times {P})\downarrow 1)\rangle
+  \;§\; \\
+⟨(\omega_2, \omega_2\;\vert\;(\mathtt{F} \times \mathtt{F} \times {P})\downarrow 1)⟩
 \end{aligned}
 $$
 
@@ -8723,7 +8723,7 @@ $$
 \mathit{travelpath} =  \\
 \text{}\lambda{\pi}^{*}\theta\;.\;
   \#{\pi}^{*}=0\rightarrow\theta, \\
-(({\pi}^{*}\downarrow 1)\downarrow 2)\langle\rangle(({\pi}^{*}\downarrow 1)\downarrow 1) \\
+(({\pi}^{*}\downarrow 1)\downarrow 2)⟨⟩(({\pi}^{*}\downarrow 1)\downarrow 1) \\
 (\lambda{\epsilon}^{*}\;.\;\mathit{travelpath}\;({\pi}^{*} \dagger 1)\theta)
 \end{aligned}
 $$
@@ -8736,10 +8736,10 @@ $$
 \text{}\mathit{threearg}\,(\lambda\epsilon_1\epsilon_2\epsilon_3\omega\kappa\;.\;
   (\epsilon_1\;\in\;\mathtt{F}\wedge\epsilon_2\;\in\;\mathtt{F}\wedge\epsilon_3\;\in\;\mathtt{F})\rightarrow \\
 \mathit{applicate}\;
-  \epsilon_1\langle\rangle\omega(\lambda{\zeta}^{*}\;.\; \\
-\mathit{applicate}\;\epsilon_2\langle\rangle
+  \epsilon_1⟨⟩\omega(\lambda{\zeta}^{*}\;.\; \\
+\mathit{applicate}\;\epsilon_2⟨⟩
   ((\epsilon_1\;\vert\;\mathtt{F},\epsilon_3\;\vert\;\mathtt{F},\omega)\textrm{ in }{P}) \\
-(\lambda{\epsilon}^{*}\;.\;\mathit{applicate}\;\epsilon_3\langle\rangle\omega(\lambda{\zeta}^{*}\;.\;\kappa{\epsilon}^{*}))), \\
+(\lambda{\epsilon}^{*}\;.\;\mathit{applicate}\;\epsilon_3⟨⟩\omega(\lambda{\zeta}^{*}\;.\;\kappa{\epsilon}^{*}))), \\
 \mathit{wrong }\mathrm{\text{“}bad procedure argument\text{”}})
 \end{aligned}
 $$
@@ -8756,11 +8756,11 @@ $$
 $$
 \begin{aligned}
 \mathit{cwv}          :  {\mathtt{E}}^{*} \to {P} \to \mathtt{K} \to \mathtt{C}
-    \text{\qquad [\ide{call-with-values}]} \\
+    \text{\qquad [\texttt{call-with-values}]} \\
 
 \mathit{cwv} = \\
 \text{}\mathit{twoarg}\,(\lambda\epsilon_1\epsilon_2\omega\kappa\;.\;
-   \mathit{applicate}\;\epsilon_1\langle\;\rangle\omega
+   \mathit{applicate}\;\epsilon_1⟨\;⟩\omega
 (\lambda{\epsilon}^{*}\;.\;\mathit{applicate}\;\epsilon_2\;{\epsilon}^{*}\omega))
 \end{aligned}
 $$
