@@ -807,6 +807,7 @@ def convert_blocks(lines, ctx):
         text = '\n'.join(para)
         md = convert_inline2(text, ctx, False)
         md = _cleanup_paragraph(md)
+        md = _hardbreak_proto_lines(md)
         if md.strip():
             out.append(md.strip())
             out.append('')
@@ -848,6 +849,27 @@ def _cleanup_paragraph(md):
     md = re.sub(r'\n{2,}', '\n\n', md)
     md = re.sub(r'[ \t]{2,}', ' ', md)
     return md.strip()
+
+
+# A rendered entry header line, e.g. **`(make-vector k)`** — procedure
+_PROTO_LINE = re.compile(r'^\*\*`.+`\*\* — .')
+
+
+def _hardbreak_proto_lines(md):
+    """Force a Markdown hard line break between consecutive header/proto lines.
+
+    Standalone ``\\pproto`` templates in prose (e.g. the two ``make-vector``
+    signatures in the entry-format section) sit on adjacent source lines with
+    no blank line between them. Without trailing spaces a single newline is a
+    soft break, so Markdown would collapse the two signatures onto one line.
+    This mirrors the hard-wrapping ``env_entry`` already applies to the
+    multiple signature lines of a real entry.
+    """
+    lines = md.split('\n')
+    for i in range(len(lines) - 1):
+        if _PROTO_LINE.match(lines[i]) and _PROTO_LINE.match(lines[i + 1]):
+            lines[i] = lines[i].rstrip() + '  '
+    return '\n'.join(lines)
 
 
 def mathblock(body):

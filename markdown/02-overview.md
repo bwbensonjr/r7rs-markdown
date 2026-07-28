@@ -219,7 +219,7 @@ indicates that the procedure bound to the `vector-ref` variable takes
 two arguments, a vector *vector* and an exact non-negative integer
 *k* (see below). The header lines
 
-**`(make-vector k)`** — procedure
+**`(make-vector k)`** — procedure  
 **`(make-vector k fill)`** — procedure
 
 indicate that the `make-vector` procedure must be defined to take
